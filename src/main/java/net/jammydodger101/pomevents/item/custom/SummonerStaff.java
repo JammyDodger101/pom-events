@@ -35,7 +35,7 @@ public class SummonerStaff extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (loadedEntity == null || user.getWorld() instanceof ClientWorld || user.getItemCooldownManager().isCoolingDown(this)) return TypedActionResult.fail(user.getStackInHand(hand));
+        if (loadedEntity == null || world.isClient() || user.getItemCooldownManager().isCoolingDown(this)) return TypedActionResult.fail(user.getStackInHand(hand));
         EntityType<?> entityType = loadedEntity.getType();
         generateSpawnPositions(user.getBlockPos());
         for (BlockPos spawnPos:

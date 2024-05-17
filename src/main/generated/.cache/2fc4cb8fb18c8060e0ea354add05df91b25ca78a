@@ -1,7 +1,9 @@
-// 1.20.1	2024-05-16T21:05:42.6917237	pom events/Recipes
+// 1.20.1	2024-05-17T12:23:28.3477574	pom events/Recipes
 19bb8c5c221e3be92c84de21445f26b6bd776569 data\pom-events\advancements\recipes\combat\dragon_wing.json
 c55b899359f3eb2aa0139007148612327db458f0 data\pom-events\advancements\recipes\combat\luck_blade.json
 fc074ce8f05c8bb5370fd53ab26c4c0b66f80a0a data\pom-events\advancements\recipes\tools\blaze_shield.json
 98b533f9e5ba3be6dd5436b3029faa4789664583 data\pom-events\recipes\blaze_shield.json
+a706802aa79f894a48f90a5219ac5b9ecfefb0c0 data\pom-events\advancements\recipes\combat\summoner_staff.json
 f6da555825e71131928c2b3468f5bf500ce641bd data\pom-events\recipes\luck_blade.json
 e469dacdd94d428be04ec319099503fc6efadaac data\pom-events\recipes\dragon_wing.json
+a65f0dbee5bf77e7e87123191d9ced75b893a37b data\pom-events\recipes\summoner_staff.json
