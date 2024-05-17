@@ -59,5 +59,15 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(Items.DRAGON_EGG), conditionsFromItem(Items.DRAGON_EGG))
                 .offerTo(exporter, new Identifier(getRecipeName(ModItems.DRAGON_WING)));
 
+        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, ModItems.SUMMONER_STAFF, 1)
+                .pattern("XHX")
+                .pattern("XDX")
+                .pattern("XSX")
+                .input('X', Items.EXPERIENCE_BOTTLE)
+                .input('D', Blocks.DIAMOND_BLOCK)
+                .input('S', Items.STICK)
+                .input('H', Items.HEART_OF_THE_SEA)
+                .criterion(hasItem(Items.HEART_OF_THE_SEA), conditionsFromItem(Items.HEART_OF_THE_SEA))
+                .offerTo(exporter, new Identifier(getRecipeName(ModItems.SUMMONER_STAFF)));
     }
 }

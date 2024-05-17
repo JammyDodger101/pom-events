@@ -11,11 +11,12 @@ import net.minecraft.util.Identifier;
 
 public class ModItemGroups {
     public static final ItemGroup FUN_GROUP = Registry.register(Registries.ITEM_GROUP, new Identifier(PomEvents.MOD_ID, "jammysmodoffun"),
-            FabricItemGroup.builder().displayName(Text.translatable("itemgroup.jammysmodoffun")).icon(() -> new ItemStack(ModItems.CROCKSMARTER_BLADE)).entries(((displayContext, entries) -> {
+            FabricItemGroup.builder().displayName(Text.translatable("itemgroup.pom-events")).icon(() -> new ItemStack(ModItems.CROCKSMARTER_BLADE)).entries(((displayContext, entries) -> {
                 entries.add(ModItems.CROCKSMARTER_BLADE);
                 entries.add(ModItems.LUCK_BLADE);
                 entries.add(ModItems.DRAGON_WING);
                 entries.add(ModItems.BLAZE_SHIELD);
+                entries.add(ModItems.SUMMONER_STAFF);
             })).build());
 
     public static void registerItemGroups() {

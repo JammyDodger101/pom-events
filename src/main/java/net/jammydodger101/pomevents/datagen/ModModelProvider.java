@@ -23,6 +23,6 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        //itemModelGenerator.register(ModItems.CROCKSMARTER_BLADE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.LIFESTEAL_HEART, Models.GENERATED);
     }
 }
