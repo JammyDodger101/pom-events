@@ -25,7 +25,7 @@ public class LuckBlade extends SwordItem {
 
 
     public void addEffectsToList() {
-        statusEffectsList.add(StatusEffects.ABSORPTION);
+    //    statusEffectsList.add(StatusEffects.ABSORPTION);
         statusEffectsList.add(StatusEffects.BAD_OMEN);
         statusEffectsList.add(StatusEffects.BLINDNESS);
     //    statusEffectsList.add(StatusEffects.CONDUIT_POWER);
@@ -38,10 +38,10 @@ public class LuckBlade extends SwordItem {
     //    statusEffectsList.add(StatusEffects.HERO_OF_THE_VILLAGE);
         statusEffectsList.add(StatusEffects.HUNGER);
     //    statusEffectsList.add(StatusEffects.INFESTED);
-        statusEffectsList.add(StatusEffects.INSTANT_DAMAGE);
+    //    statusEffectsList.add(StatusEffects.INSTANT_DAMAGE);
     //    statusEffectsList.add(StatusEffects.INSTANT_HEALTH);
         statusEffectsList.add(StatusEffects.INVISIBILITY);
-        statusEffectsList.add(StatusEffects.JUMP_BOOST);
+    //    statusEffectsList.add(StatusEffects.JUMP_BOOST);
         statusEffectsList.add(StatusEffects.LEVITATION);
     //    statusEffectsList.add(StatusEffects.LUCK);
         statusEffectsList.add(StatusEffects.MINING_FATIGUE);
@@ -58,7 +58,7 @@ public class LuckBlade extends SwordItem {
         statusEffectsList.add(StatusEffects.SPEED);
         statusEffectsList.add(StatusEffects.STRENGTH);
     //    statusEffectsList.add(StatusEffects.TRIAL_OMEN);
-        statusEffectsList.add(StatusEffects.WATER_BREATHING);
+    //    statusEffectsList.add(StatusEffects.WATER_BREATHING);
         statusEffectsList.add(StatusEffects.WEAKNESS);
     //    statusEffectsList.add(StatusEffects.WIND_CHARGED);
         statusEffectsList.add(StatusEffects.WITHER);

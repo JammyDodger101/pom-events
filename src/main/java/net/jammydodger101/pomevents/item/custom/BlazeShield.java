@@ -99,7 +99,7 @@ public class BlazeShield extends ShieldItem implements Equipment {
                 if (!world.getBlockState(blockPos2).isAir() || !world.getBlockState(blockPos2.down()).isOpaqueFullCube(world, blockPos2.down())) continue;
                 world.setBlockState(blockPos2, AbstractFireBlock.getState(world, blockPos2));
             }
-            user.getItemCooldownManager().set(this, 100);
+            user.getItemCooldownManager().set(this, 300);
             return TypedActionResult.consume(itemStack);
         }
         return TypedActionResult.fail(itemStack);

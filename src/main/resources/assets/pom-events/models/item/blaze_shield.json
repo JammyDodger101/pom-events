@@ -97,5 +97,13 @@
 		"fixed": {
 			"translation": [-1.25, 1, -1.25]
 		}
-	}
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"blocking": 1
+			},
+			"model": "pom-events:models/item/blaze_shield_blocking"
+		}
+	]
 }

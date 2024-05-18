@@ -11,6 +11,7 @@ import net.minecraft.server.BannedPlayerList;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,6 +28,7 @@ public abstract class LifestealKillMixin extends PlayerEntity {
     private void lifesteal(DamageSource damageSource, CallbackInfo ci) {
         Entity attacker = damageSource.getAttacker();
         ServerPlayerEntity deadEntity = (ServerPlayerEntity)(Object)this;
+        deadEntity.changeGameMode(GameMode.SPECTATOR);
         if (attacker instanceof ServerPlayerEntity) {
             LifestealHandler.increaseHealth((LivingEntity) attacker, 2);
             LifestealHandler.decreaseHealth(deadEntity, 2);

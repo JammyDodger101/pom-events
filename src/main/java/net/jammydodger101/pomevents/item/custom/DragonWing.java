@@ -66,6 +66,7 @@ public class DragonWing extends AxeItem {
         Vec3d vec3d = attacker.getPos().subtract(target.getPos());
         double d = -1f;
         Vec3d vec3d2 = vec3d.normalize().multiply(d);
+        target.velocityModified = true;
         target.addVelocity(vec3d2.x, 0.5f, vec3d2.z);
         return super.postHit(stack, target, attacker);
     }
