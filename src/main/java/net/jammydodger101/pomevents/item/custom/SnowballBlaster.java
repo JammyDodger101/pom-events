@@ -1,10 +1,8 @@
 package net.jammydodger101.pomevents.item.custom;
 
 import com.google.common.collect.Lists;
-import net.jammydodger101.pomevents.entity.ModEntities;
-import net.jammydodger101.pomevents.entity.custom.ExplosiveSnowballEntity;
 import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.client.item.TooltipContext;
+//import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.CrossbowUser;
@@ -38,11 +36,12 @@ import org.joml.Vector3f;
 
 import java.util.List;
 import java.util.function.Predicate;
-
+/*
 public class SnowballBlaster extends RangedWeaponItem {
     public SnowballBlaster(Settings settings) {
         super(settings);
     }
+
 
     @Override
     public Predicate<ItemStack> getProjectiles() {
@@ -302,8 +301,11 @@ public class SnowballBlaster extends RangedWeaponItem {
     public int getRange() {
         return 8;
     }
+
+    @Override
+    protected void shoot(LivingEntity shooter, ProjectileEntity projectile, int index, float speed, float divergence, float yaw, @Nullable LivingEntity target) {
+
+    }
 }
 
-
-
-
+*/

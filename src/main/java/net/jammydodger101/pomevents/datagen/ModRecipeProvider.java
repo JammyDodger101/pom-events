@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.jammydodger101.pomevents.item.ModItems;
 import net.minecraft.block.Blocks;
-import net.minecraft.data.server.recipe.RecipeJsonProvider;
+import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.Items;
@@ -18,12 +18,12 @@ import java.util.function.Consumer;
 public class ModRecipeProvider extends FabricRecipeProvider {
 
 
-    public ModRecipeProvider(FabricDataOutput output) {
-        super(output);
+    public ModRecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        super(output, registryLookup);
     }
 
     @Override
-    public void generate(Consumer<RecipeJsonProvider> exporter) {
+    public void generate(RecipeExporter exporter) {
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.COMBAT, ModItems.LUCK_BLADE, 1)
                 .input(Items.DIAMOND_SWORD)
@@ -36,7 +36,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .input(Items.SPORE_BLOSSOM)
                 .input(Items.LEATHER)
                 .criterion(hasItem(Items.DIAMOND_SWORD), conditionsFromItem(Items.DIAMOND_SWORD))
-                .offerTo(exporter, new Identifier(getRecipeName(ModItems.LUCK_BLADE)));
+                .offerTo(exporter, Identifier.of(getRecipeName(ModItems.LUCK_BLADE)));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, ModItems.BLAZE_SHIELD, 1)
                 .pattern("MBM")
@@ -47,7 +47,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .input('S', Items.SHIELD)
                 .input('A', Blocks.ANCIENT_DEBRIS)
                 .criterion(hasItem(Items.SHIELD), conditionsFromItem(Items.SHIELD))
-                .offerTo(exporter, new Identifier(getRecipeName(ModItems.BLAZE_SHIELD)));
+                .offerTo(exporter, Identifier.of(getRecipeName(ModItems.BLAZE_SHIELD)));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, ModItems.DRAGON_WING, 1)
                 .pattern(" E ")
@@ -57,7 +57,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .input('D', Items.DRAGON_EGG)
                 .input('A', Items.DIAMOND_AXE)
                 .criterion(hasItem(Items.DRAGON_EGG), conditionsFromItem(Items.DRAGON_EGG))
-                .offerTo(exporter, new Identifier(getRecipeName(ModItems.DRAGON_WING)));
+                .offerTo(exporter, Identifier.of(getRecipeName(ModItems.DRAGON_WING)));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, ModItems.SUMMONER_STAFF, 1)
                 .pattern("XHX")
@@ -68,6 +68,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .input('S', Items.STICK)
                 .input('H', Items.HEART_OF_THE_SEA)
                 .criterion(hasItem(Items.HEART_OF_THE_SEA), conditionsFromItem(Items.HEART_OF_THE_SEA))
-                .offerTo(exporter, new Identifier(getRecipeName(ModItems.SUMMONER_STAFF)));
+                .offerTo(exporter, Identifier.of(getRecipeName(ModItems.SUMMONER_STAFF)));
     }
 }

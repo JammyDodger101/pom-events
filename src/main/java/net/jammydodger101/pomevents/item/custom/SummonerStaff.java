@@ -40,7 +40,7 @@ public class SummonerStaff extends Item {
         generateSpawnPositions(user.getBlockPos());
         for (BlockPos spawnPos:
              spawnPositions) {
-            entityType.spawn((ServerWorld) user.getWorld(), null ,null, spawnPos, SpawnReason.MOB_SUMMONED, false, false);
+            entityType.spawn((ServerWorld) user.getWorld(), spawnPos, SpawnReason.MOB_SUMMONED);
         }
         user.getItemCooldownManager().set(this,1200);
         return TypedActionResult.success(user.getStackInHand(hand));

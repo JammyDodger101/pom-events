@@ -1,5 +1,6 @@
 package net.jammydodger101.pomevents.entity.custom;
 
+/*
 import net.jammydodger101.pomevents.entity.ModEntities;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -50,3 +51,5 @@ public class ExplosiveSnowballEntity extends PersistentProjectileEntity {
         super.onBlockHit(blockHitResult);
     }
 }
+
+*/

@@ -1,6 +1,5 @@
 package net.jammydodger101.pomevents.item;
 
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.jammydodger101.pomevents.PomEvents;
 import net.jammydodger101.pomevents.item.custom.*;
 import net.minecraft.item.Item;
@@ -17,11 +16,11 @@ public class ModItems {
     public static final Item BLAZE_SHIELD = registerItem("blaze_shield", new BlazeShield(new Item.Settings().rarity(Rarity.EPIC).maxCount(1)));
     public static final Item SUMMONER_STAFF = registerItem("summoner_staff", new SummonerStaff(new Item.Settings().rarity(Rarity.EPIC).maxCount(1)));
     //public static final Item SNOWBALL_BLASTER = registerItem("snowball_blaster", new SnowballBlaster(new Item.Settings().rarity(Rarity.EPIC).maxCount(1)));
-    public static final Item LIFESTEAL_HEART = registerItem("lifesteal_heart", new LifestealHeartItem(new FabricItemSettings().rarity(Rarity.EPIC)));
+    public static final Item LIFESTEAL_HEART = registerItem("lifesteal_heart", new LifestealHeartItem(new Item.Settings().rarity(Rarity.EPIC)));
 
 
     private static Item registerItem(String name, Item item) {
-        return Registry.register(Registries.ITEM, new Identifier(PomEvents.MOD_ID, name), item);
+        return Registry.register(Registries.ITEM, Identifier.of(PomEvents.MOD_ID, name), item);
     }
 
     public static void registerModItems() {

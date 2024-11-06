@@ -22,7 +22,7 @@ public class DragonWing extends AxeItem {
 
 
     public DragonWing(ToolMaterial material, float attackDamage, float attackSpeed, Settings settings) {
-        super(material, attackDamage, attackSpeed, settings);
+        super(material, settings);
     }
 
     @Override

@@ -50,7 +50,7 @@ public class BlazeShield extends ShieldItem implements Equipment {
         if (!user.getItemCooldownManager().isCoolingDown(this)) {
 
             if (world.isClient) return TypedActionResult.fail(itemStack);
-            Explosion explosion = new Explosion(world, null, null, null, user.getX(), user.getY(), user.getZ(), 0.2f, false, Explosion.DestructionType.KEEP);
+            Explosion explosion = new Explosion(world, null, user.getX(), user.getY(), user.getZ(), 0.2f, false, Explosion.DestructionType.KEEP);
             user.setCurrentHand(hand);
             //BlockPos shieldPos = user.getBlockPos().add(user.getMovementDirection().getVector());
             world.createExplosion(null, null, null, user.getBlockPos().getX(), user.getBlockPos().getY(), user.getBlockPos().getZ(), 0f, false, World.ExplosionSourceType.TNT);

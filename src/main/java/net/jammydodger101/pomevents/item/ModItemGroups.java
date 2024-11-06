@@ -10,7 +10,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class ModItemGroups {
-    public static final ItemGroup FUN_GROUP = Registry.register(Registries.ITEM_GROUP, new Identifier(PomEvents.MOD_ID, "pom-events"),
+    public static final ItemGroup FUN_GROUP = Registry.register(Registries.ITEM_GROUP, Identifier.of(PomEvents.MOD_ID, "pom-events"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.pom-events")).icon(() -> new ItemStack(ModItems.CROCKSMARTER_BLADE)).entries(((displayContext, entries) -> {
                 entries.add(ModItems.CROCKSMARTER_BLADE);
                 entries.add(ModItems.LUCK_BLADE);

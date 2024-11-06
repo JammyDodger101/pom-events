@@ -1,5 +1,6 @@
 package net.jammydodger101.pomevents.entity;
 
+/*
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.jammydodger101.pomevents.PomEvents;
 import net.jammydodger101.pomevents.entity.custom.ExplosiveSnowballEntity;
@@ -16,3 +17,6 @@ public class ModEntities {
             FabricEntityTypeBuilder.<ExplosiveSnowballEntity>create(SpawnGroup.MISC, ExplosiveSnowballEntity::new)
                     .dimensions(EntityDimensions.fixed(0.25f, 0.25f)).build());
 }
+
+
+ */

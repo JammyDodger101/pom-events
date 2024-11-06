@@ -17,10 +17,10 @@ import java.util.Random;
 
 public class LuckBlade extends SwordItem {
 
-    public List<StatusEffect> statusEffectsList = new ArrayList<>();
+    public List<RegistryEntry<StatusEffect>> statusEffectsList = new ArrayList<>();
 
     public LuckBlade(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, settings);
     }
 
 
@@ -70,7 +70,7 @@ public class LuckBlade extends SwordItem {
             addEffectsToList();
             //stack.damage(1, attacker, EquipmentSlot.MAINHAND);
             Random random = new Random();
-            target.addStatusEffect(new StatusEffectInstance((StatusEffect) statusEffectsList.get(random.nextInt(0,statusEffectsList.size())), random.nextInt(50,80), random.nextInt(1,3)));
+            target.addStatusEffect(new StatusEffectInstance((RegistryEntry<StatusEffect>) statusEffectsList.get(random.nextInt(0,statusEffectsList.size())), random.nextInt(50,80), random.nextInt(1,3)));
             ((PlayerEntity) attacker).getItemCooldownManager().set(this, 50);
         }
         return true;
