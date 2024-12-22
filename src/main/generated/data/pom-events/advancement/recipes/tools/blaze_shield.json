@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_heart_of_the_sea": {
+    "has_shield": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:heart_of_the_sea"
-            ]
+            "items": "minecraft:shield"
           }
         ]
       },
@@ -15,21 +13,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:summoner_staff"
+        "recipe": "minecraft:blaze_shield"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_heart_of_the_sea",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_shield"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:summoner_staff"
+      "minecraft:blaze_shield"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

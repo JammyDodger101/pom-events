@@ -37,7 +37,7 @@ public class LuckBlade extends SwordItem {
     //    statusEffectsList.add(StatusEffects.HEALTH_BOOST);
     //    statusEffectsList.add(StatusEffects.HERO_OF_THE_VILLAGE);
         statusEffectsList.add(StatusEffects.HUNGER);
-    //    statusEffectsList.add(StatusEffects.INFESTED);
+        statusEffectsList.add(StatusEffects.INFESTED);
     //    statusEffectsList.add(StatusEffects.INSTANT_DAMAGE);
     //    statusEffectsList.add(StatusEffects.INSTANT_HEALTH);
         statusEffectsList.add(StatusEffects.INVISIBILITY);
@@ -47,7 +47,8 @@ public class LuckBlade extends SwordItem {
         statusEffectsList.add(StatusEffects.MINING_FATIGUE);
         statusEffectsList.add(StatusEffects.NAUSEA);
         statusEffectsList.add(StatusEffects.NIGHT_VISION);
-    //    statusEffectsList.add(StatusEffects.OOZING);
+        statusEffectsList.add(StatusEffects.OOZING);
+        statusEffectsList.add(StatusEffects.OOZING);
         statusEffectsList.add(StatusEffects.POISON);
     //    statusEffectsList.add(StatusEffects.RAID_OMEN);
         statusEffectsList.add(StatusEffects.REGENERATION);
@@ -60,7 +61,8 @@ public class LuckBlade extends SwordItem {
     //    statusEffectsList.add(StatusEffects.TRIAL_OMEN);
     //    statusEffectsList.add(StatusEffects.WATER_BREATHING);
         statusEffectsList.add(StatusEffects.WEAKNESS);
-    //    statusEffectsList.add(StatusEffects.WIND_CHARGED);
+        statusEffectsList.add(StatusEffects.WEAVING);
+        statusEffectsList.add(StatusEffects.WIND_CHARGED);
         statusEffectsList.add(StatusEffects.WITHER);
     }
 

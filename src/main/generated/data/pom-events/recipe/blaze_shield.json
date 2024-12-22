@@ -21,7 +21,7 @@
     "MBM"
   ],
   "result": {
-    "item": "pom-events:blaze_shield"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "pom-events:blaze_shield"
+  }
 }

@@ -1,10 +1,11 @@
 {
   "item.pom-events.crocksmarter_blade" : "Crocksmarter Blade",
   "item.pom-events.luck_blade" : "Luck Blade",
-  "item.pom-events.dragon_wing" : "Dragon Wing Axe",
+  "item.pom-events.dragon_wing" : "Dragon Wing",
   "item.pom-events.blaze_shield" : "Blazing Shield",
   "item.pom-events.summoner_staff" : "Summoner Staff",
   "item.pom-events.lifesteal_heart" : "Lifesteal Heart",
+  "item.pom-events.gale_bow" : "Gale Bow",
 
   "itemgroup.pom-events" : "PomPomDexter Event"
 }

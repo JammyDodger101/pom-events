@@ -21,7 +21,7 @@
     "XSX"
   ],
   "result": {
-    "item": "pom-events:summoner_staff"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "pom-events:summoner_staff"
+  }
 }

@@ -18,6 +18,8 @@ public class ModItemGroups {
                 entries.add(ModItems.BLAZE_SHIELD);
                 entries.add(ModItems.SUMMONER_STAFF);
                 entries.add(ModItems.LIFESTEAL_HEART);
+                entries.add(ModItems.GALE_BOW);
+                entries.add(ModItems.SCULK_TRIDENT);
             })).build());
 
     public static void registerItemGroups() {

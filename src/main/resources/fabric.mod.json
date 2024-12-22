@@ -18,6 +18,9 @@
 		"main": [
 			"net.jammydodger101.pomevents.PomEvents"
 		],
+		"client": [
+			"net.jammydodger101.pomevents.PomEventsClient"
+		],
 		"fabric-datagen": [
 			"net.jammydodger101.pomevents.PomEventsDataGenerator"
 		]

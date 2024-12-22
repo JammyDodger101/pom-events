@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_diamond_sword": {
+    "has_dragon_egg": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:diamond_sword"
-            ]
+            "items": "minecraft:dragon_egg"
           }
         ]
       },
@@ -15,21 +13,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:luck_blade"
+        "recipe": "minecraft:dragon_wing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_diamond_sword",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_dragon_egg"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:luck_blade"
+      "minecraft:dragon_wing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

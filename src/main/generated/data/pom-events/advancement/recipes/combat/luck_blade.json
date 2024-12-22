@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_shield": {
+    "has_diamond_sword": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:shield"
-            ]
+            "items": "minecraft:diamond_sword"
           }
         ]
       },
@@ -15,21 +13,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:blaze_shield"
+        "recipe": "minecraft:luck_blade"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_shield",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_diamond_sword"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:blaze_shield"
+      "minecraft:luck_blade"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

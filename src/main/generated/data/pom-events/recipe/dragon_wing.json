@@ -18,7 +18,7 @@
     " A "
   ],
   "result": {
-    "item": "pom-events:dragon_wing"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "pom-events:dragon_wing"
+  }
 }
