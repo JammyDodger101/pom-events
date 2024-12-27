@@ -69,5 +69,38 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .input('H', Items.HEART_OF_THE_SEA)
                 .criterion(hasItem(Items.HEART_OF_THE_SEA), conditionsFromItem(Items.HEART_OF_THE_SEA))
                 .offerTo(exporter, Identifier.of(getRecipeName(ModItems.SUMMONER_STAFF)));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, ModItems.GALE_BOW, 1)
+                .pattern("BS ")
+                .pattern("BWS")
+                .pattern("BS ")
+                .input('B', Items.BREEZE_ROD)
+                .input('W', Items.WIND_CHARGE)
+                .input('S', Items.STRING)
+                .criterion(hasItem(Items.BREEZE_ROD), conditionsFromItem(Items.BREEZE_ROD))
+                .offerTo(exporter, Identifier.of(getRecipeName(ModItems.GALE_BOW)));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, ModItems.PILLAGER_CROSSBOW, 1)
+                .pattern("XSX")
+                .pattern("TCT")
+                .pattern("XUX")
+                .input('X', Items.EXPERIENCE_BOTTLE)
+                .input('S', Items.SPECTRAL_ARROW)
+                .input('T', Items.TNT)
+                .input('C', Items.CROSSBOW)
+                .input('U', Items.TOTEM_OF_UNDYING)
+                .criterion(hasItem(Items.TOTEM_OF_UNDYING), conditionsFromItem(Items.TOTEM_OF_UNDYING))
+                .offerTo(exporter, Identifier.of(getRecipeName(ModItems.PILLAGER_CROSSBOW)));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, ModItems.SCULK_TRIDENT, 1)
+                .pattern("SGS")
+                .pattern("STS")
+                .pattern("SCS")
+                .input('G', Items.GUNPOWDER)
+                .input('T', Items.TRIDENT)
+                .input('S', Blocks.SCULK)
+                .input('C', Blocks.SCULK_CATALYST)
+                .criterion(hasItem(Items.SCULK_CATALYST), conditionsFromItem(Items.SCULK_CATALYST))
+                .offerTo(exporter, Identifier.of(getRecipeName(ModItems.SCULK_TRIDENT)));
     }
 }

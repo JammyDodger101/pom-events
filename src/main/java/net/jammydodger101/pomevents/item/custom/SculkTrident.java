@@ -64,7 +64,7 @@ public class SculkTrident extends Item implements ProjectileItem {
                 if (!playerEntity.isInCreativeMode()) {
                     playerEntity.getInventory().removeOne(stack);
                 }
-                ((PlayerEntity) user).getItemCooldownManager().set(this, 10);
+                ((PlayerEntity) user).getItemCooldownManager().set(this, 300);
             }
         }
     }

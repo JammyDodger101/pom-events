@@ -18,6 +18,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.EntityExplosionBehavior;
 import net.minecraft.world.explosion.Explosion;
@@ -54,55 +55,22 @@ public class BlazeShield extends ShieldItem implements Equipment {
             user.setCurrentHand(hand);
             //BlockPos shieldPos = user.getBlockPos().add(user.getMovementDirection().getVector());
             world.createExplosion(null, null, null, user.getBlockPos().getX(), user.getBlockPos().getY(), user.getBlockPos().getZ(), 0f, false, World.ExplosionSourceType.TNT);
-            double x = user.getX();
-            double y = user.getY();
-            double z = user.getZ();
-            DamageSource damageSource = world.getDamageSources().explosion(explosion);
-            ExplosionBehavior behavior = new EntityExplosionBehavior(user);
-            float power = 2.4f;
-            int l;
-            int k;
-            HashSet<BlockPos> set = Sets.newHashSet();
-            int i = 16;
-            for (int j = 0; j < 16; ++j) {
-                for (k = 0; k < 16; ++k) {
-                    block2: for (l = 0; l < 16; ++l) {
-                        if (j != 0 && j != 15 && k != 0 && k != 15 && l != 0 && l != 15) continue;
-                        double d = (float)j / 15.0f * 2.0f - 1.0f;
-                        double e = (float)k / 15.0f * 2.0f - 1.0f;
-                        double f = (float)l / 15.0f * 2.0f - 1.0f;
-                        double g = Math.sqrt(d * d + e * e + f * f);
-                        d /= g;
-                        e /= g;
-                        f /= g;
-                        double m = x;
-                        double n = y;
-                        double o = z;
-                        float p = 0.3f;
-                        for (float h = power * (0.7f + world.random.nextFloat() * 0.6f); h > 0.0f; h -= 0.22500001f) {
-                            BlockPos blockPos = BlockPos.ofFloored(m, n, o);
-                            BlockState blockState = world.getBlockState(blockPos);
-                            FluidState fluidState = world.getFluidState(blockPos);
-                            if (!world.isInBuildLimit(blockPos)) continue block2;
-                            if (behavior.canDestroyBlock(explosion, world, blockPos, blockState, h)) {
-                                set.add(blockPos);
-                            }
-                            m += d * (double)0.3f;
-                            n += e * (double)0.3f;
-                            o += f * (double)0.3f;
-                        }
-                    }
-                }
-            }
-            this.affectedBlocks.addAll((Collection<BlockPos>)set);
-            for (BlockPos blockPos2 : this.affectedBlocks) {
-                if (!world.getBlockState(blockPos2).isAir() || !world.getBlockState(blockPos2.down()).isOpaqueFullCube(world, blockPos2.down())) continue;
+
+            int radius = 8;
+            Iterable<BlockPos> set = BlockPos.iterateOutwards(user.getBlockPos(), radius, 2, radius);
+
+            for (BlockPos blockPos2 : set) {
+                if (!world.getBlockState(blockPos2).isAir() || !world.getBlockState(blockPos2.down()).isOpaqueFullCube(world, blockPos2.down()) || !(blockPos2.isWithinDistance(user.getBlockPos(), 5.0) && !blockPos2.isWithinDistance(user.getBlockPos(), 4.0))) continue;
                 world.setBlockState(blockPos2, AbstractFireBlock.getState(world, blockPos2));
             }
             user.getItemCooldownManager().set(this, 300);
             return TypedActionResult.consume(itemStack);
         }
         return TypedActionResult.fail(itemStack);
+    }
+
+    public void shootFire() {
+
     }
 
 }

@@ -21,7 +21,7 @@ import net.minecraft.world.event.GameEvent;
 public class DragonWing extends AxeItem {
 
 
-    public DragonWing(ToolMaterial material, float attackDamage, float attackSpeed, Settings settings) {
+    public DragonWing(ToolMaterial material, Settings settings) {
         super(material, settings);
     }
 

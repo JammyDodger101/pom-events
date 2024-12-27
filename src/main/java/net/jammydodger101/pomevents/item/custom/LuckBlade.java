@@ -19,7 +19,7 @@ public class LuckBlade extends SwordItem {
 
     public List<RegistryEntry<StatusEffect>> statusEffectsList = new ArrayList<>();
 
-    public LuckBlade(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
+    public LuckBlade(ToolMaterial toolMaterial, Settings settings) {
         super(toolMaterial, settings);
     }
 

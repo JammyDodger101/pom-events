@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "minecraft:crossbow"
+    },
+    "S": {
+      "item": "minecraft:spectral_arrow"
+    },
+    "T": {
+      "item": "minecraft:tnt"
+    },
+    "U": {
+      "item": "minecraft:totem_of_undying"
+    },
+    "X": {
+      "item": "minecraft:experience_bottle"
+    }
+  },
+  "pattern": [
+    "XSX",
+    "TCT",
+    "XUX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "pom-events:pillager_crossbow"
+  }
+}
