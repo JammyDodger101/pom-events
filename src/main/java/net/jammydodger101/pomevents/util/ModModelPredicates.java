@@ -1,13 +1,16 @@
 package net.jammydodger101.pomevents.util;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.jammydodger101.pomevents.item.ModItems;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 
+@Environment(EnvType.CLIENT)
 public class ModModelPredicates {
     public static void registerModelPredicates() {
-        //registerCustomBow(ModItems.GALE_BOW);
+        registerCustomBow(ModItems.GALE_BOW);
     }
 
     private static void registerCustomBow(Item item) {

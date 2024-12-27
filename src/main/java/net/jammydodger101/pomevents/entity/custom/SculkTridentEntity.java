@@ -151,4 +151,8 @@ public class SculkTridentEntity extends PersistentProjectileEntity {
 
         super.onEntityHit(hitResult);
     }
+
+    public boolean isEnchanted() {
+        return false;
+    }
 }

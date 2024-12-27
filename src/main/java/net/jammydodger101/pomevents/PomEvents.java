@@ -31,7 +31,7 @@ public class PomEvents implements ModInitializer {
 		ModItems.registerModItems();
 		ModItemGroups.registerItemGroups();
 		ModDataComponents.registerDataComponentTypes();
-		ModModelPredicates.registerModelPredicates();
+		//ModModelPredicates.registerModelPredicates();
 
 
 	}
