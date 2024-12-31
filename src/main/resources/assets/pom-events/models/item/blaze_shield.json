@@ -103,7 +103,7 @@
 			"predicate": {
 				"blocking": 1
 			},
-			"model": "pom-events:models/item/blaze_shield_blocking"
+			"model": "pom-events:item/blaze_shield_blocking"
 		}
 	]
 }

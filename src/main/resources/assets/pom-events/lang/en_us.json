@@ -6,6 +6,8 @@
   "item.pom-events.summoner_staff" : "Summoner Staff",
   "item.pom-events.lifesteal_heart" : "Lifesteal Heart",
   "item.pom-events.gale_bow" : "Gale Bow",
+  "item.pom-events.sculk_trident" : "Sculk Trident",
+  "item.pom-events.pillager_crossbow" : "Pillager Crossbow",
 
   "itemgroup.pom-events" : "PomPomDexter Event"
 }

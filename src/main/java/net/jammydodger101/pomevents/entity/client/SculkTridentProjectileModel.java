@@ -2,6 +2,7 @@ package net.jammydodger101.pomevents.entity.client;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.jammydodger101.pomevents.PomEvents;
 import net.jammydodger101.pomevents.entity.custom.SculkTridentEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;
@@ -12,8 +13,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
-public class SculkTridentProjectileModel extends Model {
-    public static final Identifier TEXTURE = Identifier.ofVanilla("textures/entity/trident.png");
+public class SculkTridentProjectileModel extends EntityModel<SculkTridentEntity> {
+    // public static final Identifier TEXTURE = Identifier.of(PomEvents.MOD_ID,"textures/entity/sculk_trident.png");
     private final ModelPart root;
 
     public SculkTridentProjectileModel(ModelPart root) {
@@ -34,5 +35,10 @@ public class SculkTridentProjectileModel extends Model {
 
     public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
         this.root.render(matrices, vertices, light, overlay, color);
+    }
+
+    @Override
+    public void setAngles(SculkTridentEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+
     }
 }

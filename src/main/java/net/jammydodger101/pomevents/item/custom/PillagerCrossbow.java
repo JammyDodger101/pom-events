@@ -36,12 +36,12 @@ public class PillagerCrossbow extends RangedWeaponItem {
     public static final int RANGE = 8;
     private boolean charged = false;
     private boolean loaded = false;
-    private boolean exploding = true;
+    private static boolean exploding = true;
     private static final float CHARGE_PROGRESS = 0.2F;
     private static final float LOAD_PROGRESS = 0.5F;
     private static final float DEFAULT_SPEED = 3.15F;
     private static final float EXPLODE_COOLDOWN_MAX = 32F;
-    private float explode_cooldown = EXPLODE_COOLDOWN_MAX;
+    private static float explode_cooldown = EXPLODE_COOLDOWN_MAX;
 
     public PillagerCrossbow(Settings settings) {
         super(settings);
@@ -74,12 +74,22 @@ public class PillagerCrossbow extends RangedWeaponItem {
 
     }
 
+
+
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
         if (!exploding) {
             explode_cooldown -= 0.05f;
         }
+    }
+
+    public static boolean getExploding() {
+        return exploding;
+    }
+
+    public static float getExplode_cooldown() {
+        return explode_cooldown;
     }
 
     protected ProjectileEntity createArrowEntity(World world, LivingEntity shooter, ItemStack weaponStack, ItemStack projectileStack, boolean critical) {

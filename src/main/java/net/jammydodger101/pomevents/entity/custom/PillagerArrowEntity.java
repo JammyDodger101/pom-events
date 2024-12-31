@@ -50,8 +50,6 @@ public class PillagerArrowEntity extends PersistentProjectileEntity {
     protected void onHit(LivingEntity target) {
         super.onHit(target);
 
-        this.discard();
-
         StatusEffectInstance statusEffectInstance = new StatusEffectInstance(StatusEffects.GLOWING, this.duration, 0);
         target.addStatusEffect(statusEffectInstance, this.getEffectCause());
 
@@ -59,6 +57,8 @@ public class PillagerArrowEntity extends PersistentProjectileEntity {
         if (world instanceof ServerWorld serverWorld) {
             if (!(target instanceof VexEntity) && exploding) {
                 explodeAndSummon(serverWorld, target.getBlockPos(), true);
+
+                this.discard();
             }
 
         }
@@ -70,12 +70,13 @@ public class PillagerArrowEntity extends PersistentProjectileEntity {
     protected void onBlockHit(BlockHitResult hitResult) {
         super.onBlockHit(hitResult);
 
-        this.discard();
 
         World world = this.getWorld();
         if (world instanceof ServerWorld serverWorld) {
             if (exploding) {
                 explodeAndSummon(serverWorld, hitResult.getBlockPos(), false);
+
+                this.discard();
             }
 
         }

@@ -28,7 +28,7 @@ public class SculkTridentEntity extends PersistentProjectileEntity {
     private boolean dealtDamage;
     public int returnTimer;
 
-    protected SculkTridentEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
+    public SculkTridentEntity(EntityType<SculkTridentEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -48,6 +48,7 @@ public class SculkTridentEntity extends PersistentProjectileEntity {
         super(EntityType.TRIDENT, x, y, z, world, shotFrom, null);
     }
 
+
     @Override
     protected ItemStack getDefaultItemStack() {
         return null;
@@ -66,6 +67,10 @@ public class SculkTridentEntity extends PersistentProjectileEntity {
             int i = 5;
             if (!this.isOwnerAlive()) {
                 this.discard();
+            } else if (entity instanceof PlayerEntity playerEntity) {
+                if (playerEntity.isCreative()) {
+                    this.discard();
+                }
             } else {
                 this.setNoClip(true);
                 Vec3d vec3d = entity.getEyePos().subtract(this.getPos());
