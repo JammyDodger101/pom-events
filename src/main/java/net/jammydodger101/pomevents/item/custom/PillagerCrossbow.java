@@ -51,7 +51,7 @@ public class PillagerCrossbow extends RangedWeaponItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
         ChargedProjectilesComponent chargedProjectilesComponent = itemStack.get(DataComponentTypes.CHARGED_PROJECTILES);
-        PomEvents.LOGGER.info(String.valueOf(explode_cooldown));
+        // PomEvents.LOGGER.info(String.valueOf(explode_cooldown));
         if (chargedProjectilesComponent != null && !chargedProjectilesComponent.isEmpty()) {
             if (explode_cooldown <= 0f) {
                 exploding = true;

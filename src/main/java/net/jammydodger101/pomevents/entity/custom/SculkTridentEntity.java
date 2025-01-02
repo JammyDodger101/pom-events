@@ -1,6 +1,7 @@
 package net.jammydodger101.pomevents.entity.custom;
 
 import net.jammydodger101.pomevents.PomEvents;
+import net.jammydodger101.pomevents.entity.ModEntities;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -41,11 +42,11 @@ public class SculkTridentEntity extends PersistentProjectileEntity {
     }
 
     public SculkTridentEntity(World world, PlayerEntity playerEntity, ItemStack stack) {
-        super(EntityType.TRIDENT, playerEntity, world, stack, null);
+        super(ModEntities.SCULK_TRIDENT, playerEntity, world, stack, null);
     }
 
     public SculkTridentEntity(World world, double x, double y, double z, ItemStack shotFrom) {
-        super(EntityType.TRIDENT, x, y, z, world, shotFrom, null);
+        super(ModEntities.SCULK_TRIDENT, x, y, z, world, shotFrom, null);
     }
 
 
@@ -64,7 +65,7 @@ public class SculkTridentEntity extends PersistentProjectileEntity {
         Entity entity = this.getOwner();
         if ((this.dealtDamage || this.isNoClip()) && entity != null) {
 
-            int i = 5;
+            int i = 20;
             if (!this.isOwnerAlive()) {
                 this.discard();
             } else if (entity instanceof PlayerEntity playerEntity) {

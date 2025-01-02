@@ -1,6 +1,8 @@
 package net.jammydodger101.pomevents.item.custom;
 
 import net.jammydodger101.pomevents.component.ModDataComponents;
+import net.jammydodger101.pomevents.entity.custom.GaleBowArrowEntity;
+import net.jammydodger101.pomevents.entity.custom.PillagerArrowEntity;
 import net.jammydodger101.pomevents.mixin.GaleFallDamageMixin;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -23,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.RangedWeaponItem;
 import net.minecraft.item.WindChargeItem;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -31,6 +34,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -55,10 +60,6 @@ public class GaleBow extends RangedWeaponItem {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (entity instanceof PlayerEntity) {
             holdingBow = ((PlayerEntity) entity).getStackInHand(((PlayerEntity) entity).getActiveHand()) == stack || ((PlayerEntity) entity).getStackInHand(Hand.OFF_HAND) == stack;
-        }
-
-        if (stack.get(ModDataComponents.MODE) != null && world.isClient()) {
-            bowMode = stack.get(ModDataComponents.MODE);
         }
 
         super.inventoryTick(stack, world, entity, slot, selected);
@@ -102,25 +103,14 @@ public class GaleBow extends RangedWeaponItem {
                 float f = getPullProgress(i);
                 if (!((double) f < 0.01)) {
                     List<ItemStack> list = load(stack, itemStack, playerEntity);
-                    if (world instanceof ServerWorld) {
-                        ServerWorld serverWorld = ((ServerWorld) world);
+                    if (world instanceof ServerWorld serverWorld) {
                         if (!list.isEmpty()) {
 
-                            // true mode = wind charge, false mode = arrows
-                            if (bowMode == 1) {
-                                useWindCharge(world, (PlayerEntity) user, user.getActiveHand());
-                                launchLivingEntities((ServerWorld) world, user);
-                                ((PlayerEntity) user).getItemCooldownManager().set(this, 100);
-                                world.playSound((PlayerEntity)null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST, SoundCategory.PLAYERS, 1.0F, 1.0F / (world.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-
-                            } else {
-                                this.shootAll(serverWorld, playerEntity, playerEntity.getActiveHand(), stack, list, f * 3.0f, 1.0f, f == 1.0F, ((LivingEntity) null));
-                                world.playSound((PlayerEntity)null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (world.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-                            }
-
-
-
-                            //this.shootAll(serverWorld, playerEntity, playerEntity.getActiveHand(), stack, list, f * 3.0f, 1.0f, f == 1.0F, ((LivingEntity) null));
+                            launchLivingEntities((ServerWorld) world, user);
+                            ((PlayerEntity) user).getItemCooldownManager().set(this, 100);
+                            windEffect(playerEntity.getBlockPos(), serverWorld);
+                            this.shootAll(serverWorld, playerEntity, playerEntity.getActiveHand(), stack, list, f * 3.0f, 1.0f, f == 1.0F, ((LivingEntity) null));
+                            world.playSound((PlayerEntity)null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (world.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
                         }
                     }
 
@@ -128,6 +118,35 @@ public class GaleBow extends RangedWeaponItem {
                 }
             }
         }
+    }
+
+    private void windEffect(BlockPos center, ServerWorld world) {
+        Vec3d vec3d = center.toCenterPos();
+        float speed = 10f;
+        float delta = 5f;
+        float distanceParallel = 5f;
+        float distanceCorner = 3.5f;
+
+        /*
+        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), 1.0f, 0.0f, 0.0f);
+        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), 1.0f, 0.0f, 1.0f);
+        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), 0.0f, 0.0f, 1.0f);
+        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), -1.0f, 0.0f, 1.0f);
+        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), -1.0f, 0.0f, 0.0f);
+        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), -1.0f, 0.0f, -1.0f);
+        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), 0.0f, 0.0f, -1.0f);
+        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), 1.0f, 0.0f, -1.0f);
+
+         */
+
+        world.spawnParticles(ParticleTypes.GUST, vec3d.getX()+distanceParallel, vec3d.getY(), vec3d.getZ(), 1, 0f, 0.0f, 0.0f, speed);
+        world.spawnParticles(ParticleTypes.GUST, vec3d.getX()+distanceCorner, vec3d.getY(), vec3d.getZ()+distanceCorner, 1, 0f, 0.0f, 0f, speed);
+        world.spawnParticles(ParticleTypes.GUST, vec3d.getX(), vec3d.getY(), vec3d.getZ()+distanceParallel, 1, 0.0f, 0.0f, 0f, speed);
+        world.spawnParticles(ParticleTypes.GUST, vec3d.getX()-distanceCorner, vec3d.getY(), vec3d.getZ()+distanceCorner, 1, -0f, 0.0f, 0f, speed);
+        world.spawnParticles(ParticleTypes.GUST, vec3d.getX()-distanceParallel, vec3d.getY(), vec3d.getZ(), 1, -0f, 0.0f, 0.0f, speed);
+        world.spawnParticles(ParticleTypes.GUST, vec3d.getX()-distanceCorner, vec3d.getY(), vec3d.getZ()-distanceCorner, 1, -0f, 0.0f, -0f, speed);
+        world.spawnParticles(ParticleTypes.GUST, vec3d.getX(), vec3d.getY(), vec3d.getZ()-distanceParallel, 1, 0.0f, 0.0f, -0f, speed);
+        world.spawnParticles(ParticleTypes.GUST, vec3d.getX()+distanceCorner, vec3d.getY(), vec3d.getZ()-distanceCorner, 1, 0f, 0.0f, -0f, speed);
     }
 
     private void launchLivingEntities(ServerWorld world, LivingEntity user) {
@@ -150,31 +169,14 @@ public class GaleBow extends RangedWeaponItem {
 
     }
 
-
-
-    public void useWindCharge(World world, PlayerEntity user, Hand hand) {
-        if (!world.isClient()) {
-            for (int i = -1; i < 2; i++) {
-                WindChargeEntity windChargeEntity = new WindChargeEntity(user, world, user.getPos().getX(), user.getEyePos().getY(), user.getPos().getZ());
-                windChargeEntity.setVelocity(user, user.getPitch(), user.getYaw() + (i*10.0f), 0.0F, 1.5F, 1.0F);
-                world.spawnEntity(windChargeEntity);
-            }
-
-        }
-
-        world.playSound((PlayerEntity)null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_WIND_CHARGE_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
-        ItemStack itemStack = user.getStackInHand(hand);
-        // user.getItemCooldownManager().set(this, 10);
-        // user.incrementStat(Stats.USED.getOrCreateStat(this));
+    @Override
+    protected ProjectileEntity createArrowEntity(World world, LivingEntity shooter, ItemStack weaponStack, ItemStack projectileStack, boolean critical) {
+        return new GaleBowArrowEntity(world, shooter, weaponStack, projectileStack);
     }
 
     @Override
     public Predicate<ItemStack> getProjectiles() {
-        if (bowMode == 1) {
-            return GALE_PROJECTILES;
-        } else {
-            return BOW_PROJECTILES;
-        }
+        return BOW_PROJECTILES;
 
     }
 

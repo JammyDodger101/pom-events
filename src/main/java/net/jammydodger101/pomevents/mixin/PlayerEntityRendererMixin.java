@@ -22,11 +22,11 @@ public class PlayerEntityRendererMixin {
         if (!itemStack.isEmpty()) {
             // PomEvents.LOGGER.info("a");
             if (player.getActiveHand() == hand) {
-                PomEvents.LOGGER.info(String.valueOf(player.getItemUseTimeLeft()));
+                // PomEvents.LOGGER.info(String.valueOf(player.getItemUseTimeLeft()));
                 if (player.getItemUseTimeLeft() == 0) {
-                    PomEvents.LOGGER.info("e???");
+                    // PomEvents.LOGGER.info("e???");
                     if (!player.handSwinging && itemStack.isOf(ModItems.PILLAGER_CROSSBOW) && CrossbowItem.isCharged(itemStack)) {
-                        PomEvents.LOGGER.info("houston");
+                        // PomEvents.LOGGER.info("houston");
                         cir.setReturnValue(BipedEntityModel.ArmPose.CROSSBOW_HOLD);
                     }
                 } else if (player.getItemUseTime() > 0) {

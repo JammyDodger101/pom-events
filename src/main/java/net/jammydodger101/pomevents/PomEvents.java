@@ -2,14 +2,11 @@ package net.jammydodger101.pomevents;
 
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.event.client.player.ClientPreAttackCallback;
+import net.jammydodger101.pomevents.command.ModCommands;
 import net.jammydodger101.pomevents.component.ModDataComponents;
-import net.jammydodger101.pomevents.event.SwitchModeHandler;
 import net.jammydodger101.pomevents.item.ModItemGroups;
 import net.jammydodger101.pomevents.item.ModItems;
 import net.jammydodger101.pomevents.util.ModModelPredicates;
-import net.minecraft.text.Text;
-import net.minecraft.util.Hand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +29,7 @@ public class PomEvents implements ModInitializer {
 		ModItemGroups.registerItemGroups();
 		ModDataComponents.registerDataComponentTypes();
 		ModModelPredicates.registerModelPredicates();
+		ModCommands.init();
 
 
 

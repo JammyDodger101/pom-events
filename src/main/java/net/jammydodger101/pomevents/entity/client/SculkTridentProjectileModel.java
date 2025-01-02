@@ -14,7 +14,7 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class SculkTridentProjectileModel extends EntityModel<SculkTridentEntity> {
-    // public static final Identifier TEXTURE = Identifier.of(PomEvents.MOD_ID,"textures/entity/sculk_trident.png");
+    public static final Identifier TEXTURE = Identifier.of(PomEvents.MOD_ID,"textures/entity/sculk_trident.png");
     private final ModelPart root;
 
     public SculkTridentProjectileModel(ModelPart root) {
