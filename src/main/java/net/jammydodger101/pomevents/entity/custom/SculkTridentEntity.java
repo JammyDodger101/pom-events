@@ -42,11 +42,11 @@ public class SculkTridentEntity extends PersistentProjectileEntity {
     }
 
     public SculkTridentEntity(World world, PlayerEntity playerEntity, ItemStack stack) {
-        super(ModEntities.SCULK_TRIDENT, playerEntity, world, stack, null);
+        super(EntityType.TRIDENT, playerEntity, world, stack, null);
     }
 
     public SculkTridentEntity(World world, double x, double y, double z, ItemStack shotFrom) {
-        super(ModEntities.SCULK_TRIDENT, x, y, z, world, shotFrom, null);
+        super(EntityType.TRIDENT, x, y, z, world, shotFrom, null);
     }
 
 
@@ -61,17 +61,22 @@ public class SculkTridentEntity extends PersistentProjectileEntity {
             this.dealtDamage = true;
         }
 
-        // PomEvents.LOGGER.info("tick1");
-        Entity entity = this.getOwner();
-        if ((this.dealtDamage || this.isNoClip()) && entity != null) {
+        //PomEvents.LOGGER.info(String.valueOf(this.dealtDamage));
+        //PomEvents.LOGGER.info(String.valueOf(this.isNoClip()));
 
-            int i = 20;
-            if (!this.isOwnerAlive()) {
-                this.discard();
-            } else if (entity instanceof PlayerEntity playerEntity) {
+        Entity entity = this.getOwner();
+        if (this.dealtDamage || this.isNoClip() && entity != null) {
+            PomEvents.LOGGER.info(String.valueOf(entity));
+
+            if (entity instanceof PlayerEntity playerEntity) {
                 if (playerEntity.isCreative()) {
                     this.discard();
                 }
+            }
+
+            int i = 3;
+            if (!this.isOwnerAlive()) {
+                this.discard();
             } else {
                 this.setNoClip(true);
                 Vec3d vec3d = entity.getEyePos().subtract(this.getPos());
@@ -107,12 +112,23 @@ public class SculkTridentEntity extends PersistentProjectileEntity {
         return this.dealtDamage ? null : super.getEntityCollision(currentPosition, nextPosition);
     }
 
+    private void decayBlocks(World world ,BlockPos blockPos, int power) {
+        Iterable<BlockPos> affectedBlocksIterable = BlockPos.iterateOutwards(blockPos, 6, 4, 6);
+        for (BlockPos block : affectedBlocksIterable) {
+            if (world.getBlockState(block).isAir() || !block.isWithinDistance(blockPos, 4)) {
+                continue;
+            }
+            world.setBlockState(block, Blocks.AIR.getDefaultState());
+        }
+    }
+
     private void sculkExplosion(World world, BlockPos blockPos, int radius) {
         BlockPos sculkChangePos = blockPos.add(0, -3, 0);
         // List<BlockPos> affectedBlocks = new ArrayList<>();
         // affectedBlocksIterable.forEach(affectedBlocks::add);
         // Explosion explosion = new Explosion(world, null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), power, affectedBlocks, Explosion.DestructionType.DESTROY_WITH_DECAY, ParticleTypes.SCULK_SOUL, ParticleTypes.EXPLOSION_EMITTER, SoundEvents.ENTITY_GENERIC_EXPLODE);
-        world.createExplosion(null, null, null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 5.0f, false, World.ExplosionSourceType.BLOCK, ParticleTypes.EXPLOSION, ParticleTypes.EXPLOSION_EMITTER, SoundEvents.ENTITY_GENERIC_EXPLODE);
+        world.createExplosion(null, null, null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 2f, false, World.ExplosionSourceType.BLOCK, ParticleTypes.EXPLOSION, ParticleTypes.EXPLOSION_EMITTER, SoundEvents.ENTITY_GENERIC_EXPLODE);
+        decayBlocks(world, blockPos, 6);
         Iterable<BlockPos> affectedBlocksIterable = BlockPos.iterateRandomly(Random.create(), 2000, sculkChangePos, radius);
         for (BlockPos affBlock : affectedBlocksIterable) {
             // PomEvents.LOGGER.info(String.valueOf(affBlock));
@@ -134,7 +150,7 @@ public class SculkTridentEntity extends PersistentProjectileEntity {
         super.onBlockHit(hitResult);
 
         World world = this.getWorld();
-        sculkExplosion(world, hitResult.getBlockPos(), 8);
+        sculkExplosion(world, hitResult.getBlockPos(), 6);
 
         this.dealtDamage = true;
         this.setNoClip(true);
@@ -147,7 +163,7 @@ public class SculkTridentEntity extends PersistentProjectileEntity {
     protected void onEntityHit(EntityHitResult hitResult) {
         if (hitResult.getEntity() != this.getOwner()) {
             World world = this.getWorld();
-            sculkExplosion(world, hitResult.getEntity().getBlockPos(), 8);
+            sculkExplosion(world, hitResult.getEntity().getBlockPos(), 6);
 
             this.dealtDamage = true;
             this.setNoClip(true);

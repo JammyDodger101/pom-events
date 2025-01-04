@@ -8,6 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.mob.VexEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.SpectralArrowEntity;
@@ -33,6 +34,7 @@ public class PillagerArrowEntity extends PersistentProjectileEntity {
     public PillagerArrowEntity(World world, LivingEntity owner, ItemStack stack, @Nullable ItemStack shotFrom, Boolean exploding) {
         super(EntityType.SPECTRAL_ARROW, owner, world, stack, shotFrom);
         this.exploding = exploding;
+        this.pickupType = PickupPermission.CREATIVE_ONLY;
     }
 
     public PillagerArrowEntity(World world, double x, double y, double z, ItemStack stack, @Nullable ItemStack shotFrom) {
@@ -53,12 +55,14 @@ public class PillagerArrowEntity extends PersistentProjectileEntity {
         StatusEffectInstance statusEffectInstance = new StatusEffectInstance(StatusEffects.GLOWING, this.duration, 0);
         target.addStatusEffect(statusEffectInstance, this.getEffectCause());
 
+        this.discard();
+
         World world = this.getWorld();
         if (world instanceof ServerWorld serverWorld) {
-            if (!(target instanceof VexEntity) && exploding) {
+            if (!(target instanceof PillagerEntity) && exploding) {
                 explodeAndSummon(serverWorld, target.getBlockPos(), true);
 
-                this.discard();
+
             }
 
         }
@@ -70,13 +74,14 @@ public class PillagerArrowEntity extends PersistentProjectileEntity {
     protected void onBlockHit(BlockHitResult hitResult) {
         super.onBlockHit(hitResult);
 
+        this.discard();
 
         World world = this.getWorld();
         if (world instanceof ServerWorld serverWorld) {
             if (exploding) {
                 explodeAndSummon(serverWorld, hitResult.getBlockPos(), false);
 
-                this.discard();
+
             }
 
         }
@@ -87,10 +92,12 @@ public class PillagerArrowEntity extends PersistentProjectileEntity {
         // BlockPos blockPos = new BlockPos((int) hitResult.getPos().getX(), (int) hitResult.getPos().getY(), (int) hitResult.getPos().getZ());
 
         if (summon) {
-            Entity vexEntity = EntityType.VEX.create(serverWorld, null, pos, SpawnReason.MOB_SUMMONED, false, false);
-            Entity vexEntity1 = EntityType.VEX.create(serverWorld, null, pos, SpawnReason.MOB_SUMMONED, false, false);
-            serverWorld.spawnEntity(vexEntity);
-            serverWorld.spawnEntity(vexEntity1);
+            Entity pillagerEntity = EntityType.PILLAGER.create(serverWorld, null, pos, SpawnReason.MOB_SUMMONED, false, false);
+            Entity pillagerEntity1 = EntityType.PILLAGER.create(serverWorld, null, pos, SpawnReason.MOB_SUMMONED, false, false);
+            Entity pillagerEntity2 = EntityType.PILLAGER.create(serverWorld, null, pos, SpawnReason.MOB_SUMMONED, false, false);
+            serverWorld.spawnEntity(pillagerEntity);
+            serverWorld.spawnEntity(pillagerEntity1);
+            serverWorld.spawnEntity(pillagerEntity2);
         }
 
     }

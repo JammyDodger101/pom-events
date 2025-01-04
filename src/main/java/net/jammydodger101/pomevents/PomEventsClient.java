@@ -7,6 +7,7 @@ import net.jammydodger101.pomevents.entity.ModEntities;
 import net.jammydodger101.pomevents.entity.client.ModEntityModelLayers;
 import net.jammydodger101.pomevents.entity.client.SculkTridentEntityRenderer;
 import net.jammydodger101.pomevents.entity.client.SculkTridentProjectileModel;
+import net.jammydodger101.pomevents.util.ModModelPredicates;
 
 public class PomEventsClient implements ClientModInitializer {
     @Override
@@ -14,6 +15,7 @@ public class PomEventsClient implements ClientModInitializer {
 
         EntityModelLayerRegistry.registerModelLayer(ModEntityModelLayers.SCULK_TRIDENT, SculkTridentProjectileModel::getTexturedModelData);
         EntityRendererRegistry.register(ModEntities.SCULK_TRIDENT, SculkTridentEntityRenderer::new);
+        ModModelPredicates.registerModelPredicates();
 
     }
 }
