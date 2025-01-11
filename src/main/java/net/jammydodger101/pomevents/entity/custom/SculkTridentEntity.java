@@ -115,7 +115,7 @@ public class SculkTridentEntity extends PersistentProjectileEntity {
     private void decayBlocks(World world ,BlockPos blockPos, int power) {
         Iterable<BlockPos> affectedBlocksIterable = BlockPos.iterateOutwards(blockPos, 6, 4, 6);
         for (BlockPos block : affectedBlocksIterable) {
-            if (world.getBlockState(block).isAir() || !block.isWithinDistance(blockPos, 4)) {
+            if (world.getBlockState(block).isAir() || !block.isWithinDistance(blockPos, 4) || world.getBlockState(block).getBlock().getBlastResistance() > 200) {
                 continue;
             }
             world.setBlockState(block, Blocks.AIR.getDefaultState());
@@ -132,7 +132,7 @@ public class SculkTridentEntity extends PersistentProjectileEntity {
         Iterable<BlockPos> affectedBlocksIterable = BlockPos.iterateRandomly(Random.create(), 2000, sculkChangePos, radius);
         for (BlockPos affBlock : affectedBlocksIterable) {
             // PomEvents.LOGGER.info(String.valueOf(affBlock));
-            if (world.getBlockState(affBlock).isAir() || !affBlock.isWithinDistance(blockPos, 6.5)) {
+            if (world.getBlockState(affBlock).isAir() || !affBlock.isWithinDistance(blockPos, 6.5) || world.getBlockState(affBlock).getBlock().getBlastResistance() > 200) {
                 continue;
             }
             if (world instanceof ServerWorld serverWorld) {

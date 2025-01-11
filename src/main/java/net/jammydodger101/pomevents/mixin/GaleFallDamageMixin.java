@@ -26,7 +26,7 @@ public class GaleFallDamageMixin {
 		Item heldItemMain = entity.getStackInHand(entity.getActiveHand()).getItem();
 		Item heldItemOff = entity.getOffHandStack().getItem();
 		boolean holdingGale = heldItemMain == stack || heldItemOff == stack;
-		PomEvents.LOGGER.info(String.valueOf(holdingGale));
+		//PomEvents.LOGGER.info(String.valueOf(holdingGale));
 		if (holdingGale) {
 			cir.setReturnValue(false);
 		}

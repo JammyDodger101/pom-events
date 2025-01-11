@@ -6,6 +6,9 @@ public class ModCommands {
     public static void init() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             WithdrawHeartCommand.register(dispatcher);
+            TeleportPodiumsCommand.register(dispatcher);
+            NewPodiumLocationCommand.register(dispatcher);
+            ReviveCommand.register(dispatcher);
         });
     }
 }
