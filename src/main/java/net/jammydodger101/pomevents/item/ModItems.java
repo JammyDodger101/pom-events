@@ -21,10 +21,9 @@ public class ModItems {
     public static final Item BLAZE_SHIELD = registerItem("blaze_shield", new BlazeShield(new Item.Settings().rarity(Rarity.EPIC).maxCount(1)));
     public static final Item SUMMONER_STAFF = registerItem("summoner_staff", new SummonerStaff(new Item.Settings().rarity(Rarity.EPIC).maxCount(1)));
     public static final Item LIFESTEAL_HEART = registerItem("lifesteal_heart", new LifestealHeartItem(new Item.Settings().rarity(Rarity.EPIC)));
-    public static final Item SCULK_TRIDENT = registerItem("sculk_trident", new SculkTrident(new Item.Settings().rarity(Rarity.EPIC).maxCount(1)));
+    public static final Item SCULK_TRIDENT = registerItem("sculk_trident", new SculkTrident(new Item.Settings().rarity(Rarity.EPIC).maxCount(1).attributeModifiers(StormSpear.createAttributeModifiers(ToolMaterials.DIAMOND, 3.5f, -2f))));
     public static final Item GALE_BOW = registerItem("gale_bow", new GaleBow(new Item.Settings().rarity(Rarity.EPIC).maxCount(1)));
-    public static final Item PILLAGER_CROSSBOW = registerItem("pillager_crossbow", new PillagerCrossbow(new Item.Settings().rarity(Rarity.EPIC).maxCount(1)));
-    public static final Item PILLAGER_ARROW = registerItem("pillager_arrow", new PillagerArrow(new Item.Settings()));
+    public static final Item STORM_SPEAR = registerItem("storm_spear", new StormSpear(new Item.Settings().rarity(Rarity.EPIC).maxCount(1).attributeModifiers(StormSpear.createAttributeModifiers(ToolMaterials.DIAMOND, 2.5f, -2.5f))));
 
 
 

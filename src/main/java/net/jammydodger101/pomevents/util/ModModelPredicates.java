@@ -15,7 +15,7 @@ public class ModModelPredicates {
     public static void registerModelPredicates() {
         registerCustomBow(ModItems.GALE_BOW);
         registerCustomTrident(ModItems.SCULK_TRIDENT);
-        registerCustomCrossbow(ModItems.PILLAGER_CROSSBOW);
+        registerCustomTrident(ModItems.STORM_SPEAR);
     }
 
     private static void registerCustomBow(Item item) {

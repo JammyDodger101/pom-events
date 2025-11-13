@@ -1,13 +1,11 @@
-// 1.21	2024-12-22T20:03:42.4007392	pom events/Recipes
-9654b05881a2a32c0193619d947226a256a20583 data\pom-events\recipe\pillager_crossbow.json
+// 1.21	2025-11-09T11:07:56.2731133	pom events/Recipes
 af59d9459f1210b8c3f6e06647fd674cdad88672 data\pom-events\advancement\recipes\combat\luck_blade.json
 4d21f7641bd46f0fbd4be87fa8650cf6a23bdba8 data\pom-events\recipe\blaze_shield.json
 44c52e7bec6ee6c7be0608db72e03638dbf6e3bb data\pom-events\advancement\recipes\combat\gale_bow.json
 336fef22660d8d6f93e781edfc422cc387f42e9f data\pom-events\recipe\dragon_wing.json
-78757c5470b15a31fec6067023f6546bd59a62e6 data\pom-events\advancement\recipes\combat\pillager_crossbow.json
 60f38621587d71f1e7c5bdf77a7d7b759a1407d3 data\pom-events\advancement\recipes\tools\blaze_shield.json
-6fdb3a8e5221e77ecdc200791def7fa96c6abc9e data\pom-events\recipe\gale_bow.json
 155ff97f5f05d46ed806b8e5e519c55a8ace9980 data\pom-events\recipe\luck_blade.json
+6fdb3a8e5221e77ecdc200791def7fa96c6abc9e data\pom-events\recipe\gale_bow.json
 7236684503ecb903300e9976ece066e0d344972d data\pom-events\advancement\recipes\combat\sculk_trident.json
 83356ecd250aec0d09067836c1cd3b70042f35dc data\pom-events\advancement\recipes\combat\summoner_staff.json
 48a95d10a2c0acd0af870cdd449e5bf5dd9d3172 data\pom-events\recipe\summoner_staff.json

@@ -1,7 +1,6 @@
-// 1.21	2024-12-22T20:03:42.400244	pom events/Tags for minecraft:item
+// 1.21	2025-11-09T11:07:56.2711291	pom events/Tags for minecraft:item
 0dc814697a5915acc62a4af5765b40f0f83c60f2 data\minecraft\tags\item\axes.json
 2eb29547df32f6eaac50d0272340a1add69edd79 data\minecraft\tags\item\enchantable\sharp_weapon.json
 2e78651f2e61f4c4b95f8785284988a0fd27aee0 data\minecraft\tags\item\swords.json
-dd8df89a8458f0e0b4d884ce4ec3129cd4726baa data\minecraft\tags\item\arrows.json
 b4f191aeb7083e9dcb2b690203e18dacdf2769e2 data\minecraft\tags\item\enchantable\weapon.json
 ae3c56b1d46a87e36d1bf8d62d84fa2b08aac0dd data\minecraft\tags\item\enchantable\bow.json

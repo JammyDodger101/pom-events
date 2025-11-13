@@ -29,8 +29,11 @@ public class ReviveCommand {
         BlockPos revivePos = new BlockPos(0, 80, 0);
 
         for (ServerPlayerEntity player : players) {
-            player.teleport(world, revivePos.getX(), revivePos.getY(), revivePos.getZ(), 0f, 0f);
-            player.changeGameMode(GameMode.SURVIVAL);
+            if (player.isSpectator()) {
+                player.teleport(world, revivePos.getX(), revivePos.getY(), revivePos.getZ(), 0f, 0f);
+                player.changeGameMode(GameMode.SURVIVAL);
+            }
+
         }
 
         return 1;

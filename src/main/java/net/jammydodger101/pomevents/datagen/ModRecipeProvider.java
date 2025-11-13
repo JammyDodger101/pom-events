@@ -80,18 +80,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(Items.BREEZE_ROD), conditionsFromItem(Items.BREEZE_ROD))
                 .offerTo(exporter, Identifier.of(getRecipeName(ModItems.GALE_BOW)));
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, ModItems.PILLAGER_CROSSBOW, 1)
-                .pattern("XSX")
-                .pattern("TCT")
-                .pattern("XUX")
-                .input('X', Items.EXPERIENCE_BOTTLE)
-                .input('S', Items.SPECTRAL_ARROW)
-                .input('T', Items.TNT)
-                .input('C', Items.CROSSBOW)
-                .input('U', Items.TOTEM_OF_UNDYING)
-                .criterion(hasItem(Items.TOTEM_OF_UNDYING), conditionsFromItem(Items.TOTEM_OF_UNDYING))
-                .offerTo(exporter, Identifier.of(getRecipeName(ModItems.PILLAGER_CROSSBOW)));
-
         ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, ModItems.SCULK_TRIDENT, 1)
                 .pattern("SGS")
                 .pattern("STS")

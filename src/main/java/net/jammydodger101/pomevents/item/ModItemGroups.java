@@ -20,8 +20,7 @@ public class ModItemGroups {
                 entries.add(ModItems.LIFESTEAL_HEART);
                 entries.add(ModItems.GALE_BOW);
                 entries.add(ModItems.SCULK_TRIDENT);
-                entries.add(ModItems.PILLAGER_CROSSBOW);
-                entries.add(ModItems.PILLAGER_ARROW);
+                entries.add(ModItems.STORM_SPEAR);
             })).build());
 
     public static void registerItemGroups() {

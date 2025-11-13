@@ -35,9 +35,6 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
         getOrCreateTagBuilder(ItemTags.WEAPON_ENCHANTABLE)
                 .add(ModItems.LUCK_BLADE);
 
-        getOrCreateTagBuilder(ItemTags.ARROWS)
-                .add(ModItems.PILLAGER_ARROW);
-
 
     }
 }

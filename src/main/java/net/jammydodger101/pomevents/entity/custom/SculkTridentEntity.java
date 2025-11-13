@@ -66,8 +66,6 @@ public class SculkTridentEntity extends PersistentProjectileEntity {
 
         Entity entity = this.getOwner();
         if (this.dealtDamage || this.isNoClip() && entity != null) {
-            PomEvents.LOGGER.info(String.valueOf(entity));
-
             if (entity instanceof PlayerEntity playerEntity) {
                 if (playerEntity.isCreative()) {
                     this.discard();
@@ -172,6 +170,11 @@ public class SculkTridentEntity extends PersistentProjectileEntity {
         }
 
         super.onEntityHit(hitResult);
+    }
+
+    @Override
+    protected boolean tryPickup(PlayerEntity player) {
+        return this.isNoClip() && this.isOwner(player) && player.getInventory().insertStack(this.asItemStack());
     }
 
     public boolean isEnchanted() {
