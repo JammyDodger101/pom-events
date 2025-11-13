@@ -2,6 +2,7 @@ package net.jammydodger101.pomevents.item.custom;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
@@ -12,7 +13,7 @@ import net.minecraft.text.Text;
 
 import java.util.Objects;
 
-public class CrocksmarterBlade extends SwordItem {
+public class CrocksmarterBlade extends Item {
 
 
     public CrocksmarterBlade(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
