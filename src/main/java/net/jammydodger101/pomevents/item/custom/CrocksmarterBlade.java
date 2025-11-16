@@ -13,8 +13,6 @@ import net.minecraft.text.Text;
 import java.util.Objects;
 
 public class CrocksmarterBlade extends SwordItem {
-
-
     public CrocksmarterBlade(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, settings);
     }
