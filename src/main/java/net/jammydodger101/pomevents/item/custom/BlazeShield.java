@@ -14,6 +14,7 @@ import net.minecraft.item.Equipment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -35,42 +36,53 @@ public class BlazeShield extends ShieldItem implements Equipment {
 
     private final ObjectArrayList<BlockPos> affectedBlocks = new ObjectArrayList();
 
+    // Gives the player fire resistance when holding in main or offhand
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (entity instanceof PlayerEntity) {
-            if (((PlayerEntity) entity).getStackInHand(((PlayerEntity) entity).getActiveHand()) == stack || ((PlayerEntity) entity).getStackInHand(Hand.OFF_HAND) == stack) {
+            if (isWeaponInAHand(((PlayerEntity) entity), stack)) {
                 ((PlayerEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 1));
             }
         }
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
+    // Creates explosion when the player uses the item
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
         if (!user.getItemCooldownManager().isCoolingDown(this)) {
 
-            if (world.isClient) return TypedActionResult.fail(itemStack);
-            Explosion explosion = new Explosion(world, null, user.getX(), user.getY(), user.getZ(), 0.2f, false, Explosion.DestructionType.KEEP);
-            user.setCurrentHand(hand);
-            //BlockPos shieldPos = user.getBlockPos().add(user.getMovementDirection().getVector());
+            if (world.isClient()) return TypedActionResult.fail(itemStack);
+            //user.setCurrentHand(hand);
             world.createExplosion(null, null, null, user.getBlockPos().getX(), user.getBlockPos().getY(), user.getBlockPos().getZ(), 0f, false, World.ExplosionSourceType.TNT);
 
-            int radius = 8;
-            Iterable<BlockPos> set = BlockPos.iterateOutwards(user.getBlockPos(), radius, 2, radius);
+            createFireRing(8, user.getBlockPos(), ((ServerWorld) world));
 
-            for (BlockPos blockPos2 : set) {
-                if (!world.getBlockState(blockPos2).isAir() || !world.getBlockState(blockPos2.down()).isOpaqueFullCube(world, blockPos2.down()) || !(blockPos2.isWithinDistance(user.getBlockPos(), 5.0) && !blockPos2.isWithinDistance(user.getBlockPos(), 4.0))) continue;
-                world.setBlockState(blockPos2, AbstractFireBlock.getState(world, blockPos2));
-            }
             user.getItemCooldownManager().set(this, 300);
             return TypedActionResult.consume(itemStack);
         }
         return TypedActionResult.fail(itemStack);
     }
 
-    public void shootFire() {
-
+    public boolean isWeaponInAHand(PlayerEntity player, ItemStack stack) {
+        return player.getStackInHand(player.getActiveHand()) == stack || player.getStackInHand(Hand.OFF_HAND) == stack;
     }
 
+    public void createFireRing(int radius, BlockPos centre, ServerWorld world) {
+        Iterable<BlockPos> set = BlockPos.iterateOutwards(centre, radius, 2, radius);
+
+        for (BlockPos blockPos2 : set) {
+            if (isValidBlock(blockPos2, world) || isWithinRange(4.0, 5.0, blockPos2, centre)) continue;
+            world.setBlockState(blockPos2, AbstractFireBlock.getState(world, blockPos2));
+        }
+    }
+
+    public boolean isValidBlock(BlockPos block, ServerWorld world) {
+        return !world.getBlockState(block).isAir() || !world.getBlockState(block.down()).isOpaqueFullCube(world, block.down());
+    }
+
+    public boolean isWithinRange(double minRange, double maxRange, BlockPos block, BlockPos centre) {
+        return !(block.isWithinDistance(centre, maxRange) && !block.isWithinDistance(centre, minRange));
+    }
 }

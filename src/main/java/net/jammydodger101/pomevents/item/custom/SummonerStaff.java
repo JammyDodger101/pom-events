@@ -44,6 +44,7 @@ public class SummonerStaff extends Item {
         for (BlockPos spawnPos:
                 spawningPositions) {
             LivingEntity entity = (LivingEntity) entityType.spawn((ServerWorld) user.getWorld(), spawnPos, SpawnReason.MOB_SUMMONED);
+
         }
 
         user.getItemCooldownManager().set(this,1200);
