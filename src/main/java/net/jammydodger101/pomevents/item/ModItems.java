@@ -17,7 +17,7 @@ public class ModItems {
     public static final Item LUCK_BLADE = registerItem("luck_blade", new LuckBlade(ToolMaterials.DIAMOND,
             new Item.Settings().rarity(Rarity.EPIC).maxCount(1).attributeModifiers(LuckBlade.createAttributeModifiers(ToolMaterials.DIAMOND,3,-2.4f))));
     public static final Item DRAGON_WING = registerItem("dragon_wing", new DragonWing(ToolMaterials.IRON,
-            new Item.Settings().rarity(Rarity.EPIC).maxCount(1).attributeModifiers(DragonWing.createAttributeModifiers(ToolMaterials.IRON,5.0f,-3.0f))));
+            new Item.Settings().rarity(Rarity.EPIC).maxCount(1).attributeModifiers(DragonWing.createAttributeModifiers(ToolMaterials.IRON,7.0f,-3.0f))));
     public static final Item BLAZE_SHIELD = registerItem("blaze_shield", new BlazeShield(new Item.Settings().rarity(Rarity.EPIC).maxCount(1)));
     public static final Item SUMMONER_STAFF = registerItem("summoner_staff", new SummonerStaff(new Item.Settings().rarity(Rarity.EPIC).maxCount(1)));
     public static final Item LIFESTEAL_HEART = registerItem("lifesteal_heart", new LifestealHeartItem(new Item.Settings().rarity(Rarity.EPIC)));
