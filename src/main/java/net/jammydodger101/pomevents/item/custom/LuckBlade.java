@@ -62,7 +62,6 @@ public class LuckBlade extends SwordItem {
             StatusEffects.REGENERATION,
             StatusEffects.RESISTANCE,
             StatusEffects.SATURATION,
-            StatusEffects.SLOW_FALLING,
             StatusEffects.SPEED,
             StatusEffects.STRENGTH,
             StatusEffects.WATER_BREATHING
@@ -70,6 +69,7 @@ public class LuckBlade extends SwordItem {
 
     private int cooldownTimer = 0;
     private int cooldownMax = -1;
+    private final int godTime = 15;
     private RegistryEntry<StatusEffect> currentHeldEffect;
 
     public LuckBlade(ToolMaterial toolMaterial, Settings settings) {
@@ -89,31 +89,54 @@ public class LuckBlade extends SwordItem {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         PlayerEntity player = (PlayerEntity) entity;
-        if (player.getStackInHand(player.getActiveHand()) == stack) {
-            if (cooldownTimer > cooldownMax) {
-                Random random = new Random();
+        if (!player.getItemCooldownManager().isCoolingDown(this)) {
+            removeZeroedEffects(player);
+            if (player.getStackInHand(player.getActiveHand()) == stack) {
+                if (cooldownTimer > cooldownMax) {
+                    Random random = new Random();
 
-                if (currentHeldEffect != null) {
-                    player.removeStatusEffect(currentHeldEffect);
+                    if (currentHeldEffect != null) {
+                        player.removeStatusEffect(currentHeldEffect);
+                    }
+
+                    currentHeldEffect = holdingStatusEffectsList.get(random.nextInt(0,holdingStatusEffectsList.size()));
+                    int time = random.nextInt(300,400);
+                    StatusEffectInstance effectInstance = new StatusEffectInstance(currentHeldEffect, time, random.nextInt(1,3));
+                    player.addStatusEffect(effectInstance);
+
+                    cooldownTimer = 0;
+                    cooldownMax = time*2;
                 }
+                cooldownTimer++;
 
-                currentHeldEffect = holdingStatusEffectsList.get(random.nextInt(0,holdingStatusEffectsList.size()));
-                int time = random.nextInt(20,80);
-                StatusEffectInstance effectInstance = new StatusEffectInstance(currentHeldEffect, time, random.nextInt(1,3));
-                player.addStatusEffect(effectInstance);
-
-                cooldownTimer = 0;
-                cooldownMax = time*2;
+                super.inventoryTick(stack, world, entity, slot, selected);
             }
-            cooldownTimer++;
-
-            super.inventoryTick(stack, world, entity, slot, selected);
         }
+
     }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         // basically make the player god
+        if (!user.getItemCooldownManager().isCoolingDown(this)) {
+            Random random = new Random();
+            StatusEffectInstance effectInstance;
+            for (RegistryEntry<StatusEffect> effect :
+                    holdingStatusEffectsList) {
+                effectInstance = new StatusEffectInstance(effect, (godTime*20), random.nextInt(1,2));
+                user.addStatusEffect(effectInstance);
+            }
+            user.getItemCooldownManager().set(this, (4*60)*20);
+        }
         return super.use(world, user, hand);
+    }
+
+    private void removeZeroedEffects(PlayerEntity player) {
+        for (StatusEffectInstance effect:
+                player.getStatusEffects()) {
+            if (effect.getDuration() < 2) {
+                player.removeStatusEffect(effect.getEffectType());
+            }
+        }
     }
 }
