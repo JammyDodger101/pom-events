@@ -47,7 +47,7 @@ import java.util.function.Predicate;
 
 public class GaleBow extends RangedWeaponItem {
     public static boolean holdingBow = false;
-    public static int bowMode = 0;
+    public int bowMode = 0;
 
     public static final Predicate<ItemStack> GALE_PROJECTILES = (itemStack -> {
         return itemStack.isOf(Items.WIND_CHARGE);
@@ -121,6 +121,7 @@ public class GaleBow extends RangedWeaponItem {
             }
         }
     }
+
 
     private void windEffect(BlockPos center, ServerWorld world) {
         float speed = 10f;

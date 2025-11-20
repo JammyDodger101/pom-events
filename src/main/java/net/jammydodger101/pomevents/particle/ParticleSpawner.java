@@ -1,6 +1,7 @@
 package net.jammydodger101.pomevents.particle;
 
 import it.unimi.dsi.fastutil.ints.IntList;
+import net.jammydodger101.pomevents.PomEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.particle.BlockDustParticle;
@@ -8,6 +9,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.component.type.FireworkExplosionComponent;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.ParticleS2CPacket;
 import net.minecraft.particle.*;
 import net.minecraft.registry.Registry;
@@ -62,17 +64,32 @@ public class ParticleSpawner {
         }
     }
 
-    public static void spawnFireworkParticles(World world, Vec3d pos) {
+    public static void spawnFireworkParticles(World world, Vec3d pos, int numParticles) {
+        if (!(world instanceof ClientWorld clientWorld)) return;
         Random random = new Random();
         double d = random.nextGaussian() * 0.05;
         double e = random.nextGaussian() * 0.05;
 
-        for(int i = 0; i < 70; ++i) {
+        for(int i = 0; i < numParticles; ++i) {
             double f = random.nextGaussian() * 0.15 + d;
             double g = random.nextGaussian() * 0.15 + e;
             double h = random.nextDouble() * 0.5;
-            ((ClientWorld) world).addParticle(ParticleTypes.FIREWORK, true, pos.x, pos.y, pos.z, f, h, g);
+            for (PlayerEntity player : world.getPlayers()) {
+                player.getWorld().addParticle(ParticleTypes.FIREWORK, true, pos.x, pos.y, pos.z, f, h, g);
+            }
+            //clientWorld.addParticle(ParticleTypes.FIREWORK, true, pos.x, pos.y, pos.z, f, h, g);
             //((ServerWorld) world).spawnParticles(ParticleTypes.FIREWORK, pos.x, pos.y, pos.z, 1, 0, 0, 0, 1);
+        }
+    }
+
+    public static void spawnFireExplosionParticles(World world, Vec3d pos, double speed, int numParticles, double randomOffsetSize) {
+        Random random = new Random();
+
+        for(int i = 0; i < numParticles; ++i) {
+            Vec3d velocity = new Vec3d(random.nextGaussian() * speed, random.nextGaussian() * speed, random.nextGaussian() * speed);
+            Vec3d randomOffsets = new Vec3d(random.nextGaussian()*randomOffsetSize, random.nextGaussian()*randomOffsetSize, random.nextGaussian()*randomOffsetSize);
+
+            ((ServerWorld) world).spawnParticles(ParticleTypes.LAVA, pos.x, pos.y, pos.z, 1, randomOffsets.x, randomOffsets.y, randomOffsets.z, speed);
         }
     }
 }

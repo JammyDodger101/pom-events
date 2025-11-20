@@ -35,8 +35,6 @@ public class BlazeShield extends ShieldItem implements Equipment {
         super(settings);
     }
 
-    private final ObjectArrayList<BlockPos> affectedBlocks = new ObjectArrayList();
-
     // Gives the player fire resistance when holding in main or offhand
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
@@ -55,10 +53,7 @@ public class BlazeShield extends ShieldItem implements Equipment {
         if (!user.getItemCooldownManager().isCoolingDown(this)) {
 
             if (world.isClient()) return TypedActionResult.fail(itemStack);
-            //user.setCurrentHand(hand);
-            world.createExplosion(null, null, null, user.getBlockPos().getX(), user.getBlockPos().getY(), user.getBlockPos().getZ(), 0f, false, World.ExplosionSourceType.TNT);
-
-            createFireRing(8, user.getBlockPos(), ((ServerWorld) world));
+            user.setCurrentHand(hand);
 
             user.getItemCooldownManager().set(this, 300);
             return TypedActionResult.consume(itemStack);
@@ -68,23 +63,6 @@ public class BlazeShield extends ShieldItem implements Equipment {
 
     public boolean isWeaponInAHand(PlayerEntity player, ItemStack stack) {
         return player.getStackInHand(player.getActiveHand()) == stack || player.getStackInHand(Hand.OFF_HAND) == stack;
-    }
-
-    public void createFireRing(int radius, BlockPos centre, ServerWorld world) {
-        Iterable<BlockPos> set = BlockPos.iterateOutwards(centre, radius, 2, radius);
-
-        for (BlockPos blockPos2 : set) {
-            if (isValidBlock(blockPos2, world) || isWithinRange(4.0, 5.0, blockPos2, centre)) continue;
-            world.setBlockState(blockPos2, AbstractFireBlock.getState(world, blockPos2));
-        }
-    }
-
-    public boolean isValidBlock(BlockPos block, ServerWorld world) {
-        return !world.getBlockState(block).isAir() || !world.getBlockState(block.down()).isOpaqueFullCube(world, block.down());
-    }
-
-    public boolean isWithinRange(double minRange, double maxRange, BlockPos block, BlockPos centre) {
-        return !(block.isWithinDistance(centre, maxRange) && !block.isWithinDistance(centre, minRange));
     }
 
     @Override

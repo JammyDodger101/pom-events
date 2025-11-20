@@ -22,7 +22,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ProjectileItem;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -88,6 +90,7 @@ public class StormSpear extends Item implements ProjectileItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
+        if (world.isClient()) return TypedActionResult.fail(itemStack);
         if (!user.getItemCooldownManager().isCoolingDown(this)) {
             user.setCurrentHand(hand);
             world.playSound(null, user.getBlockPos(), SoundEvents.BLOCK_CONDUIT_AMBIENT, SoundCategory.PLAYERS, 1.0F, 1f);
@@ -95,6 +98,14 @@ public class StormSpear extends Item implements ProjectileItem {
         } else {
             return TypedActionResult.fail(itemStack);
         }
+    }
+
+    @Override
+    public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
+        super.usageTick(world, user, stack, remainingUseTicks);
+        if (world.isClient()) return;
+        ((ServerWorld) world).spawnParticles(ParticleTypes.OMINOUS_SPAWNING, user.getX(), user.getY()+1, user.getZ(), 3, 0,0,0,1f);
+
     }
 
     @Override

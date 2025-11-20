@@ -50,6 +50,7 @@ public class DragonWing extends AxeItem {
             if (!teleportToClosestPlayer(user, ((ServerWorld) world))) {
                 chorusTeleport(user, ((ServerWorld) world));
             }
+            ((ServerWorld) world).spawnParticles(ParticleTypes.PORTAL, user.getX(), user.getY(), user.getZ(), 10, 0,0,0,3f);
             user.getItemCooldownManager().set(user.getStackInHand(hand).getItem(), 30);
             return TypedActionResult.success(user.getStackInHand(hand));
         }
