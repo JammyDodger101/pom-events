@@ -1,5 +1,6 @@
 package net.jammydodger101.pomevents.item.custom;
 
+import net.jammydodger101.pomevents.util.CraftingHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -132,11 +133,22 @@ public class LuckBlade extends SwordItem {
     }
 
     private void removeZeroedEffects(PlayerEntity player) {
-        for (StatusEffectInstance effect:
-                player.getStatusEffects()) {
-            if (effect.getDuration() < 2) {
-                player.removeStatusEffect(effect.getEffectType());
+        try {
+            for (StatusEffectInstance effect:
+                    player.getStatusEffects()) {
+                if (effect.getDuration() < 2) {
+                    player.removeStatusEffect(effect.getEffectType());
+                }
             }
+        } catch (ConcurrentModificationException e) {
+            cooldownTimer = cooldownMax + 1;
         }
+
+    }
+
+    @Override
+    public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player) {
+        super.onCraftByPlayer(stack, world, player);
+        CraftingHandler.craftedItem(stack, world, player);
     }
 }

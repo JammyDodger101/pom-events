@@ -1,6 +1,12 @@
 package net.jammydodger101.pomevents.item.custom;
 
 import net.jammydodger101.pomevents.PomEvents;
+import net.jammydodger101.pomevents.particle.ParticleSpawner;
+import net.jammydodger101.pomevents.util.CraftingHandler;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.particle.BlockDustParticle;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
@@ -41,12 +47,11 @@ public class DragonWing extends AxeItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!world.isClient()) {
-            if (teleportToClosestPlayer(user, ((ServerWorld) world))) {
-                return TypedActionResult.success(user.getStackInHand(hand));
-            } else {
+            if (!teleportToClosestPlayer(user, ((ServerWorld) world))) {
                 chorusTeleport(user, ((ServerWorld) world));
-                return TypedActionResult.success(user.getStackInHand(hand));
             }
+            user.getItemCooldownManager().set(user.getStackInHand(hand).getItem(), 30);
+            return TypedActionResult.success(user.getStackInHand(hand));
         }
         return TypedActionResult.fail(user.getStackInHand(hand));
     }
@@ -54,21 +59,23 @@ public class DragonWing extends AxeItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         World world = attacker.getWorld();
-        if (world.isClient()) {
-            return false;
-        }
+
         ServerWorld serverWorld = ((ServerWorld) world);
 
         if (!((PlayerEntity) attacker).getItemCooldownManager().isCoolingDown(this)) {
             serverWorld.playSound(null, target.getBlockPos(), SoundEvents.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.PLAYERS);
+            serverWorld.playSound(null, target.getBlockPos(), SoundEvents.ITEM_MACE_SMASH_GROUND_HEAVY, SoundCategory.PLAYERS, 2f, 0.8f);
 
             if (target instanceof ServerPlayerEntity serverPlayerTarget) {
                 serverPlayerTarget.setSpawnExtraParticlesOnFall(true);
             }
 
-            spawnSunflowerParticles(150, serverWorld, target.getPos());
+            ParticleSpawner.spawnSunflowerParticles(ParticleTypes.CLOUD, 150, serverWorld, target.getPos(), 0.3f, 0.5f, true);
+            //ParticleSpawner.spawnSunflowerParticles(ParticleTypes.DRAGON_BREATH, 300, serverWorld, target.getPos(), 0.05f, 0.2f, false);
+            ParticleSpawner.createDustPillar(Blocks.CRYING_OBSIDIAN.getDefaultState(), world, target.getPos(), 1, 100, 3);
 
             launchEntity(target, attacker, largeHPower, largeVPower);
+
             ((PlayerEntity) attacker).getItemCooldownManager().set(this, 300);
         }
 
@@ -82,26 +89,7 @@ public class DragonWing extends AxeItem {
         target.addVelocity(vec3d2.x, vPower, vec3d2.z);
     }
 
-    private void spawnSunflowerParticles(int numParticles, ServerWorld serverWorld, Vec3d center) {
-        float goldenAngle = 137.5f;
-        float speed = 0.1f;
-        float size = 0.1f;
-        for (int i = 0; i < numParticles; i++) {
-            double theta = i * goldenAngle;
-            double radius = Math.sqrt(i) * size;
-            double thetaRad = Math.toRadians(theta);
 
-            Vec3d particleVelocity = new Vec3d(i*Math.cos(thetaRad)*speed,0,i*Math.sin(thetaRad)*speed);
-            Vec3d particlePosition = new Vec3d(center.x + (radius*Math.cos(thetaRad)), center.y, center.z + (radius*Math.sin(thetaRad)));
-
-            if (i%2==0) {
-                serverWorld.spawnParticles(ParticleTypes.CLOUD, particlePosition.x, particlePosition.y, particlePosition.z, 1, particleVelocity.x, particleVelocity.y, particleVelocity.z, speed);
-            } else {
-                serverWorld.spawnParticles(ParticleTypes.DRAGON_BREATH, particlePosition.x, particlePosition.y, particlePosition.z, 1, particleVelocity.x, particleVelocity.y, particleVelocity.z, speed);
-            }
-
-        }
-    }
 
     private void chorusTeleport(PlayerEntity user, ServerWorld world) {
         for (int i = 0; i < 16; ++i) {
@@ -130,6 +118,12 @@ public class DragonWing extends AxeItem {
         }
         user.teleport(world, closestPlayer.getX(), closestPlayer.getY(), closestPlayer.getZ()-1, null, user.getYaw(), user.getPitch());
         return true;
+    }
+
+    @Override
+    public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player) {
+        super.onCraftByPlayer(stack, world, player);
+        CraftingHandler.craftedItem(stack, world, player);
     }
 }
 

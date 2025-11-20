@@ -1,6 +1,7 @@
 package net.jammydodger101.pomevents.item.custom;
 
 import net.jammydodger101.pomevents.entity.custom.SculkTridentEntity;
+import net.jammydodger101.pomevents.util.CraftingHandler;
 import net.minecraft.component.EnchantmentEffectComponentTypes;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
@@ -78,5 +79,11 @@ public class SculkTrident extends Item implements ProjectileItem {
         } else {
             return TypedActionResult.fail(itemStack);
         }
+    }
+
+    @Override
+    public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player) {
+        super.onCraftByPlayer(stack, world, player);
+        CraftingHandler.craftedItem(stack, world, player);
     }
 }

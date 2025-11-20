@@ -3,6 +3,7 @@
   "package": "net.jammydodger101.pomevents.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "CancelCraftingMixin",
     "ExampleMixin",
     "GaleFallDamageMixin",
     "LifestealKillMixin"

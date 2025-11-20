@@ -2,6 +2,7 @@ package net.jammydodger101.pomevents.item.custom;
 
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.jammydodger101.pomevents.util.CraftingHandler;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -84,5 +85,11 @@ public class BlazeShield extends ShieldItem implements Equipment {
 
     public boolean isWithinRange(double minRange, double maxRange, BlockPos block, BlockPos centre) {
         return !(block.isWithinDistance(centre, maxRange) && !block.isWithinDistance(centre, minRange));
+    }
+
+    @Override
+    public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player) {
+        super.onCraftByPlayer(stack, world, player);
+        CraftingHandler.craftedItem(stack, world, player);
     }
 }

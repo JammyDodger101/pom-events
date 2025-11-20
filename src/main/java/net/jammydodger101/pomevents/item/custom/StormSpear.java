@@ -1,6 +1,7 @@
 package net.jammydodger101.pomevents.item.custom;
 
 import net.jammydodger101.pomevents.entity.custom.StormSpearEntity;
+import net.jammydodger101.pomevents.util.CraftingHandler;
 import net.minecraft.component.EnchantmentEffectComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -113,5 +114,11 @@ public class StormSpear extends Item implements ProjectileItem {
             world.playSound(attacker, attacker.getBlockPos(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.PLAYERS, 1f, 1f);
         }
         return true;
+    }
+
+    @Override
+    public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player) {
+        super.onCraftByPlayer(stack, world, player);
+        CraftingHandler.craftedItem(stack, world, player);
     }
 }

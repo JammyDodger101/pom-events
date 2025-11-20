@@ -4,6 +4,8 @@ import net.jammydodger101.pomevents.component.ModDataComponents;
 import net.jammydodger101.pomevents.entity.custom.GaleBowArrowEntity;
 import net.jammydodger101.pomevents.entity.custom.PillagerArrowEntity;
 import net.jammydodger101.pomevents.mixin.GaleFallDamageMixin;
+import net.jammydodger101.pomevents.particle.ParticleSpawner;
+import net.jammydodger101.pomevents.util.CraftingHandler;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -121,32 +123,10 @@ public class GaleBow extends RangedWeaponItem {
     }
 
     private void windEffect(BlockPos center, ServerWorld world) {
-        Vec3d vec3d = center.toCenterPos();
         float speed = 10f;
-        float delta = 5f;
-        float distanceParallel = 5f;
-        float distanceCorner = 3.5f;
+        float radius = 5f;
 
-        /*
-        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), 1.0f, 0.0f, 0.0f);
-        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), 1.0f, 0.0f, 1.0f);
-        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), 0.0f, 0.0f, 1.0f);
-        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), -1.0f, 0.0f, 1.0f);
-        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), -1.0f, 0.0f, 0.0f);
-        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), -1.0f, 0.0f, -1.0f);
-        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), 0.0f, 0.0f, -1.0f);
-        world.addParticle(ParticleTypes.GUST, center.getX(), center.getY(), center.getZ(), 1.0f, 0.0f, -1.0f);
-
-         */
-
-        world.spawnParticles(ParticleTypes.GUST, vec3d.getX()+distanceParallel, vec3d.getY(), vec3d.getZ(), 1, 0f, 0.0f, 0.0f, speed);
-        world.spawnParticles(ParticleTypes.GUST, vec3d.getX()+distanceCorner, vec3d.getY(), vec3d.getZ()+distanceCorner, 1, 0f, 0.0f, 0f, speed);
-        world.spawnParticles(ParticleTypes.GUST, vec3d.getX(), vec3d.getY(), vec3d.getZ()+distanceParallel, 1, 0.0f, 0.0f, 0f, speed);
-        world.spawnParticles(ParticleTypes.GUST, vec3d.getX()-distanceCorner, vec3d.getY(), vec3d.getZ()+distanceCorner, 1, -0f, 0.0f, 0f, speed);
-        world.spawnParticles(ParticleTypes.GUST, vec3d.getX()-distanceParallel, vec3d.getY(), vec3d.getZ(), 1, -0f, 0.0f, 0.0f, speed);
-        world.spawnParticles(ParticleTypes.GUST, vec3d.getX()-distanceCorner, vec3d.getY(), vec3d.getZ()-distanceCorner, 1, -0f, 0.0f, -0f, speed);
-        world.spawnParticles(ParticleTypes.GUST, vec3d.getX(), vec3d.getY(), vec3d.getZ()-distanceParallel, 1, 0.0f, 0.0f, -0f, speed);
-        world.spawnParticles(ParticleTypes.GUST, vec3d.getX()+distanceCorner, vec3d.getY(), vec3d.getZ()-distanceCorner, 1, 0f, 0.0f, -0f, speed);
+        ParticleSpawner.spawnCircleCircumferenceParticles(ParticleTypes.GUST, 20, world, center.toCenterPos(), radius, speed, 0.4);
     }
 
     private void launchLivingEntities(ServerWorld world, LivingEntity user) {
@@ -162,11 +142,8 @@ public class GaleBow extends RangedWeaponItem {
                 double h = Math.max(f * f + g * g, 0.05);
                 entity.velocityModified = true;
                 entity.addVelocity(f / h * 8.0, 0.8f, g / h * 8.0);
-                // livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 75, 2));
-                // entity.damage(new, 5.0F);
             }
         }
-
     }
 
     @Override
@@ -193,5 +170,11 @@ public class GaleBow extends RangedWeaponItem {
     @Override
     public UseAction getUseAction(ItemStack stack) {
         return UseAction.BOW;
+    }
+
+    @Override
+    public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player) {
+        super.onCraftByPlayer(stack, world, player);
+        CraftingHandler.craftedItem(stack, world, player);
     }
 }

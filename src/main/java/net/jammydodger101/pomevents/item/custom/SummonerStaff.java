@@ -1,5 +1,6 @@
 package net.jammydodger101.pomevents.item.custom;
 
+import net.jammydodger101.pomevents.util.CraftingHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -79,5 +80,11 @@ public class SummonerStaff extends Item {
         BlockPos[] positions = new BlockPos[] {posNorth, posEast, posSouth, posWest, posNorthEast, posEastNorth,
                 posEastSouth, posSouthEast, posSouthWest, posWestSouth, posWestNorth, posNorthWest};
         return new ArrayList<>(Arrays.asList(positions));
+    }
+
+    @Override
+    public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player) {
+        super.onCraftByPlayer(stack, world, player);
+        CraftingHandler.craftedItem(stack, world, player);
     }
 }
