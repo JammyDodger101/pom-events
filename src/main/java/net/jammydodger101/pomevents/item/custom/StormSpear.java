@@ -111,7 +111,7 @@ public class StormSpear extends Item implements ProjectileItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         var rand = new Random();
-        if(rand.nextInt(4) == 0) {
+        if(rand.nextInt(4) == 0 || target.getWorld().getLevelProperties().isThundering()) {
 
             var world = attacker.getWorld();
             var lightning = new LightningEntity(EntityType.LIGHTNING_BOLT, world);

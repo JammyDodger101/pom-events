@@ -28,7 +28,7 @@ public class ModModelPredicates {
             }
             return (float)(stack.getMaxUseTime(entity) - entity.getItemUseTimeLeft()) / 20.0f;
         });
-        ModelPredicateProviderRegistry.register(item, Identifier.of(PomEvents.MOD_ID,"pulling"), (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0f : 0.0f);
+        ModelPredicateProviderRegistry.register(item, Identifier.ofVanilla("pulling"), (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0f : 0.0f);
     }
 
     private static void registerCustomTrident(Item item) {

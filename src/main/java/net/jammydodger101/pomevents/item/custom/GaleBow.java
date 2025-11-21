@@ -178,4 +178,6 @@ public class GaleBow extends RangedWeaponItem {
         super.onCraftByPlayer(stack, world, player);
         CraftingHandler.craftedItem(stack, world, player);
     }
+
+
 }
