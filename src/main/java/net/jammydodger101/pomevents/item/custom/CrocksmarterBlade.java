@@ -12,13 +12,15 @@ import net.minecraft.text.Text;
 
 import java.util.Objects;
 
+/*
+Bans players when hit lol
+ */
 public class CrocksmarterBlade extends SwordItem {
-
-
     public CrocksmarterBlade(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+        super(toolMaterial, settings);
     }
 
+    // Bans the player that was hit
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         BannedPlayerList bannedPlayerList = Objects.requireNonNull(target.getServer()).getPlayerManager().getUserBanList();
@@ -31,6 +33,4 @@ public class CrocksmarterBlade extends SwordItem {
         target.remove(Entity.RemovalReason.DISCARDED);
         return true;
     }
-
-
 }
