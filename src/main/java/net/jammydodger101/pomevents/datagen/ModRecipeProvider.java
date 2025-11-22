@@ -13,8 +13,10 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 
+/*
+Generates recipes
+ */
 public class ModRecipeProvider extends FabricRecipeProvider {
 
 
@@ -24,7 +26,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 
     @Override
     public void generate(RecipeExporter exporter) {
-
         ShapelessRecipeJsonBuilder.create(RecipeCategory.COMBAT, ModItems.LUCK_BLADE, 1)
                 .input(Items.DIAMOND_SWORD)
                 .input(Items.GLASS_BOTTLE)

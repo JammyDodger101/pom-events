@@ -18,6 +18,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 
+/*
+Renders the sculk trident entity (not working as far as I'm aware)
+ */
 @Environment(EnvType.CLIENT)
 public class SculkTridentEntityRenderer extends EntityRenderer<SculkTridentEntity> {
     public static final Identifier TEXTURE = Identifier.of(PomEvents.MOD_ID,"textures/entity/sculk_trident.png");

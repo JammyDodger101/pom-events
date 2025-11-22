@@ -12,6 +12,9 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 
+/*
+Creates the model for the sculk trident (not working as far as I'm aware)
+ */
 @Environment(EnvType.CLIENT)
 public class SculkTridentProjectileModel extends EntityModel<SculkTridentEntity> {
     public static final Identifier TEXTURE = Identifier.of(PomEvents.MOD_ID,"textures/entity/sculk_trident.png");

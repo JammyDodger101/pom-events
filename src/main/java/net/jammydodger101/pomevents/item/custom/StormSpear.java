@@ -2,10 +2,8 @@ package net.jammydodger101.pomevents.item.custom;
 
 import net.jammydodger101.pomevents.entity.custom.StormSpearEntity;
 import net.jammydodger101.pomevents.util.CraftingHandler;
-import net.minecraft.component.EnchantmentEffectComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LightningEntity;
@@ -17,13 +15,11 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ProjectileItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -37,15 +33,20 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
+/*
+A legendary spear that summons lightning on hit players
+When thrown, nearby entities will all be struck by lightning
+ */
 public class StormSpear extends Item implements ProjectileItem {
     public StormSpear(Item.Settings settings) {
         super(settings);
     }
 
     public static AttributeModifiersComponent createAttributeModifiers(ToolMaterial material, float baseAttackDamage, float attackSpeed) {
-        return AttributeModifiersComponent.builder().add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, (double)(baseAttackDamage + material.getAttackDamage()), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, (double)attackSpeed, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).build();
+        return AttributeModifiersComponent.builder().add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, (baseAttackDamage + material.getAttackDamage()), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, attackSpeed, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).build();
     }
 
+    // Creates the actual thrown entity
     @Override
     public ProjectileEntity createEntity(World world, Position pos, ItemStack stack, Direction direction) {
         StormSpearEntity tridentEntity = new StormSpearEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack.copyWithCount(1));
@@ -63,30 +64,32 @@ public class StormSpear extends Item implements ProjectileItem {
         return 72000;
     }
 
+    // Damages the spear
     @Override
     public void postDamageEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         stack.damage(1, attacker, EquipmentSlot.MAINHAND);
     }
 
+    // Throws the spear
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if (user instanceof PlayerEntity playerEntity) {
-            int var7 = this.getMaxUseTime(stack, user) - remainingUseTicks;
-            RegistryEntry<SoundEvent> registryEntry = EnchantmentHelper.getEffect(stack, EnchantmentEffectComponentTypes.TRIDENT_SOUND).orElse(SoundEvents.ITEM_TRIDENT_THROW);
-            if (var7 >= 10) {
+            int timeUsed = this.getMaxUseTime(stack, user) - remainingUseTicks;
+            if (timeUsed >= 10) {
                 StormSpearEntity tridentEntity = new StormSpearEntity(world, playerEntity, stack);
                 tridentEntity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), 0.0f, 2.5f, 1.0f);
 
                 world.spawnEntity(tridentEntity);
-                world.playSoundFromEntity((PlayerEntity)null, tridentEntity, (SoundEvent)registryEntry.value(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                world.playSoundFromEntity(null, tridentEntity, SoundEvents.ITEM_TRIDENT_THROW.value(), SoundCategory.PLAYERS, 1.0F, 1.0F);
                 if (!playerEntity.isInCreativeMode()) {
                     playerEntity.getInventory().removeOne(stack);
-                    ((PlayerEntity) user).getItemCooldownManager().set(this, 600);
+                    ((PlayerEntity) user).getItemCooldownManager().set(this, 300);
                 }
             }
         }
     }
 
+    // Sets the player to start holding the spear and adds sound
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
@@ -100,6 +103,7 @@ public class StormSpear extends Item implements ProjectileItem {
         }
     }
 
+    // Spawns particles when the player is wielding the spear
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         super.usageTick(world, user, stack, remainingUseTicks);
@@ -108,25 +112,32 @@ public class StormSpear extends Item implements ProjectileItem {
 
     }
 
+    // Has a 1/4 chance (100% in thunderstorms) to summon lightning on a hit entity
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         var rand = new Random();
         if(rand.nextInt(4) == 0 || target.getWorld().getLevelProperties().isThundering()) {
 
             var world = attacker.getWorld();
-            var lightning = new LightningEntity(EntityType.LIGHTNING_BOLT, world);
-            lightning.setPosition(target.getPos());
-            world.spawnEntity(lightning);
-
-            target.setOnFireFor(6);
-
-            ((LivingEntity) target).addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 60));
-
+            affectHitPlayer(world, target);
             world.playSound(attacker, attacker.getBlockPos(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.PLAYERS, 1f, 1f);
         }
         return true;
     }
 
+    // Summons lightning at hit player, as well as setting them on fire and giving glowing
+    private void affectHitPlayer(World world, LivingEntity target) {
+        var lightning = new LightningEntity(EntityType.LIGHTNING_BOLT, world);
+        lightning.setPosition(target.getPos());
+        world.spawnEntity(lightning);
+
+        target.setOnFireFor(6);
+
+        target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 60));
+
+    }
+
+    // Ensures that multiple cannot be crafted
     @Override
     public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player) {
         super.onCraftByPlayer(stack, world, player);

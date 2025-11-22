@@ -2,15 +2,15 @@ package net.jammydodger101.pomevents.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.jammydodger101.pomevents.entity.ModEntities;
-import net.jammydodger101.pomevents.item.ModItemTags;
 import net.jammydodger101.pomevents.item.ModItems;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
+/*
+Adds tags to custom items
+ */
 public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
     public ModItemTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
         super(output, completableFuture);

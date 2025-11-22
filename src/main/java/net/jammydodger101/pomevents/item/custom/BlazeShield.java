@@ -1,36 +1,21 @@
 package net.jammydodger101.pomevents.item.custom;
 
-import com.google.common.collect.Sets;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.jammydodger101.pomevents.util.CraftingHandler;
-import net.minecraft.block.AbstractFireBlock;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Equipment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
-import net.minecraft.world.explosion.EntityExplosionBehavior;
-import net.minecraft.world.explosion.Explosion;
-import net.minecraft.world.explosion.ExplosionBehavior;
 
-import java.util.Collection;
-import java.util.HashSet;
-
+/*
+Powerful shield that explodes when hit, launching players back and setting them on fire
+ */
 public class BlazeShield extends ShieldItem implements Equipment {
-    public static final float MIN_DAMAGE_AMOUNT_TO_BREAK = 3.0f;
     public BlazeShield(Settings settings) {
         super(settings);
     }
@@ -61,10 +46,12 @@ public class BlazeShield extends ShieldItem implements Equipment {
         return TypedActionResult.fail(itemStack);
     }
 
+    // Checks if the blaze shield is in the main hand or off-hand
     public boolean isWeaponInAHand(PlayerEntity player, ItemStack stack) {
         return player.getStackInHand(player.getActiveHand()) == stack || player.getStackInHand(Hand.OFF_HAND) == stack;
     }
 
+    // Ensures that multiple blaze shields cannot be crafted
     @Override
     public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player) {
         super.onCraftByPlayer(stack, world, player);

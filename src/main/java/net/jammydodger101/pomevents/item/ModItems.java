@@ -1,17 +1,17 @@
 package net.jammydodger101.pomevents.item;
 
 import net.jammydodger101.pomevents.PomEvents;
-import net.jammydodger101.pomevents.component.ModDataComponents;
 import net.jammydodger101.pomevents.item.custom.*;
-import net.minecraft.item.BowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ToolMaterials;
-import net.minecraft.item.TridentItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
+/*
+Registers every item
+ */
 public class ModItems {
     public static final Item CROCKSMARTER_BLADE = registerItem("crocksmarter_blade", new CrocksmarterBlade(ToolMaterials.DIAMOND, 2, -4f, new Item.Settings().rarity(Rarity.EPIC).maxCount(1)));
     public static final Item LUCK_BLADE = registerItem("luck_blade", new LuckBlade(ToolMaterials.DIAMOND,

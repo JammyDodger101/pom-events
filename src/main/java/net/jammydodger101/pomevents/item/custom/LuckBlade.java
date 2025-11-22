@@ -2,7 +2,6 @@ package net.jammydodger101.pomevents.item.custom;
 
 import net.jammydodger101.pomevents.util.CraftingHandler;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -18,6 +17,10 @@ import net.minecraft.world.World;
 
 import java.util.*;
 
+/*
+A legendary weapon that applies a random effect when attacking and when held
+When used, turns the player into essentially god
+ */
 public class LuckBlade extends SwordItem {
 
     public List<RegistryEntry<StatusEffect>> attackingStatusEffectsList = new ArrayList<>(Arrays.asList(
@@ -70,61 +73,67 @@ public class LuckBlade extends SwordItem {
 
     private int cooldownTimer = 0;
     private int cooldownMax = -1;
-    private final int godTime = 15;
     private RegistryEntry<StatusEffect> currentHeldEffect;
 
     public LuckBlade(ToolMaterial toolMaterial, Settings settings) {
         super(toolMaterial, settings);
     }
 
+    // Adds a random effect to the target
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!((PlayerEntity) attacker).getItemCooldownManager().isCoolingDown(this)) {
             Random random = new Random();
-            target.addStatusEffect(new StatusEffectInstance((RegistryEntry<StatusEffect>) attackingStatusEffectsList.get(random.nextInt(0,attackingStatusEffectsList.size())), random.nextInt(50,80), random.nextInt(1,3)));
+            target.addStatusEffect(new StatusEffectInstance(attackingStatusEffectsList.get(random.nextInt(0,attackingStatusEffectsList.size())), random.nextInt(50,80), random.nextInt(1,3)));
             ((PlayerEntity) attacker).getItemCooldownManager().set(this, 50);
         }
         return true;
     }
 
+    // Removes any bugged effects and gives an effect
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         PlayerEntity player = (PlayerEntity) entity;
-        if (!player.getItemCooldownManager().isCoolingDown(this)) {
-            removeZeroedEffects(player);
-            if (player.getStackInHand(player.getActiveHand()) == stack) {
-                if (cooldownTimer > cooldownMax) {
-                    Random random = new Random();
-
-                    if (currentHeldEffect != null) {
-                        player.removeStatusEffect(currentHeldEffect);
-                    }
-
-                    currentHeldEffect = holdingStatusEffectsList.get(random.nextInt(0,holdingStatusEffectsList.size()));
-                    int time = random.nextInt(300,400);
-                    StatusEffectInstance effectInstance = new StatusEffectInstance(currentHeldEffect, time, random.nextInt(1,3));
-                    player.addStatusEffect(effectInstance);
-
-                    cooldownTimer = 0;
-                    cooldownMax = time*2;
-                }
-                cooldownTimer++;
-
-                super.inventoryTick(stack, world, entity, slot, selected);
-            }
+        if (player.getItemCooldownManager().isCoolingDown(this)) {
+            return;
         }
-
+        removeZeroedEffects(player);
+        giveEffectIfHeld(player, stack);
+        super.inventoryTick(stack, world, entity, slot, selected);
     }
 
+    // Applies a random effect to the player when held
+    private void giveEffectIfHeld(PlayerEntity player, ItemStack stack) {
+        if (player.getStackInHand(player.getActiveHand()) == stack) {
+            if (cooldownTimer > cooldownMax) {
+                Random random = new Random();
+
+                if (currentHeldEffect != null) {
+                    player.removeStatusEffect(currentHeldEffect);
+                }
+
+                currentHeldEffect = holdingStatusEffectsList.get(random.nextInt(0,holdingStatusEffectsList.size()));
+                int time = random.nextInt(300,400);
+                StatusEffectInstance effectInstance = new StatusEffectInstance(currentHeldEffect, time, random.nextInt(1,3));
+                player.addStatusEffect(effectInstance);
+
+                cooldownTimer = 0;
+                cooldownMax = time*2;
+            }
+            cooldownTimer++;
+        }
+    }
+
+    // Gives the player every positive effect for 15 seconds
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        // basically make the player god
         if (!user.getItemCooldownManager().isCoolingDown(this)) {
             Random random = new Random();
             StatusEffectInstance effectInstance;
             for (RegistryEntry<StatusEffect> effect :
                     holdingStatusEffectsList) {
-                effectInstance = new StatusEffectInstance(effect, (godTime*20), random.nextInt(1,2));
+                int godTime = 15;
+                effectInstance = new StatusEffectInstance(effect, (godTime *20), random.nextInt(1,2));
                 user.addStatusEffect(effectInstance);
             }
             user.getItemCooldownManager().set(this, (4*60)*20);
@@ -132,6 +141,7 @@ public class LuckBlade extends SwordItem {
         return super.use(world, user, hand);
     }
 
+    // Removes any bugged effects that are just stuck on 0 duration for whatever reason
     private void removeZeroedEffects(PlayerEntity player) {
         try {
             for (StatusEffectInstance effect:
@@ -146,6 +156,7 @@ public class LuckBlade extends SwordItem {
 
     }
 
+    // Ensures that multiple cannot be crafted
     @Override
     public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player) {
         super.onCraftByPlayer(stack, world, player);

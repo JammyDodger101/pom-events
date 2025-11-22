@@ -1,25 +1,18 @@
 package net.jammydodger101.pomevents.item.custom;
 
-import net.jammydodger101.pomevents.PomEvents;
 import net.jammydodger101.pomevents.particle.ParticleSpawner;
 import net.jammydodger101.pomevents.util.CraftingHandler;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.particle.BlockDustParticle;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.network.packet.s2c.play.PositionFlag;
-import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -29,6 +22,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
+/*
+A legendary axe that launches hit players and causes the player to teleport when used
+ */
 public class DragonWing extends AxeItem {
     double largeHPower = -2f;
     double largeVPower = 1f;
@@ -44,6 +40,9 @@ public class DragonWing extends AxeItem {
         return ActionResult.PASS;
     }
 
+    // Teleports the player when used
+    // If there are players nearby, they teleport to the nearest player
+    // If there are not players nearby, they teleport like eating a chorus fruit
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!world.isClient()) {
@@ -57,6 +56,7 @@ public class DragonWing extends AxeItem {
         return TypedActionResult.fail(user.getStackInHand(hand));
     }
 
+    // Sends the target flying when hit with no cooldown
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         World world = attacker.getWorld();
@@ -64,17 +64,11 @@ public class DragonWing extends AxeItem {
         ServerWorld serverWorld = ((ServerWorld) world);
 
         if (!((PlayerEntity) attacker).getItemCooldownManager().isCoolingDown(this)) {
-            serverWorld.playSound(null, target.getBlockPos(), SoundEvents.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.PLAYERS);
-            serverWorld.playSound(null, target.getBlockPos(), SoundEvents.ITEM_MACE_SMASH_GROUND_HEAVY, SoundCategory.PLAYERS, 2f, 0.8f);
-
             if (target instanceof ServerPlayerEntity serverPlayerTarget) {
                 serverPlayerTarget.setSpawnExtraParticlesOnFall(true);
             }
 
-            ParticleSpawner.spawnSunflowerParticles(ParticleTypes.CLOUD, 150, serverWorld, target.getPos(), 0.3f, 0.5f, true);
-            //ParticleSpawner.spawnSunflowerParticles(ParticleTypes.DRAGON_BREATH, 300, serverWorld, target.getPos(), 0.05f, 0.2f, false);
-            ParticleSpawner.createDustPillar(Blocks.CRYING_OBSIDIAN.getDefaultState(), world, target.getPos(), 1, 100, 3);
-
+            addFlairs(serverWorld, target);
             launchEntity(target, attacker, largeHPower, largeVPower);
 
             ((PlayerEntity) attacker).getItemCooldownManager().set(this, 300);
@@ -83,6 +77,15 @@ public class DragonWing extends AxeItem {
         return super.postHit(stack, target, attacker);
     }
 
+    // Adds sound effects and particles
+    private void addFlairs(ServerWorld serverWorld, LivingEntity target) {
+        serverWorld.playSound(null, target.getBlockPos(), SoundEvents.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.PLAYERS);
+        serverWorld.playSound(null, target.getBlockPos(), SoundEvents.ITEM_MACE_SMASH_GROUND_HEAVY, SoundCategory.PLAYERS, 2f, 0.8f);
+        ParticleSpawner.spawnSunflowerParticles(ParticleTypes.CLOUD, 150, serverWorld, target.getPos(), 0.3f, 0.5f, true);
+        ParticleSpawner.createDustPillar(Blocks.CRYING_OBSIDIAN.getDefaultState(), target.getWorld(), target.getPos(), 1, 100, 3);
+    }
+
+    // Sends the target flying where the attacker is looking
     public void launchEntity(LivingEntity target, LivingEntity attacker, double hPower, double vPower) {
         Vec3d vec3d = attacker.getPos().subtract(target.getPos());
         Vec3d vec3d2 = vec3d.normalize().multiply(hPower);
@@ -90,8 +93,7 @@ public class DragonWing extends AxeItem {
         target.addVelocity(vec3d2.x, vPower, vec3d2.z);
     }
 
-
-
+    // Teleports similar to how the player teleports when eating a chorus fruit
     private void chorusTeleport(PlayerEntity user, ServerWorld world) {
         for (int i = 0; i < 16; ++i) {
             double randomPosX = user.getX() + (user.getRandom().nextDouble() - 0.5) * 16.0;
@@ -112,6 +114,7 @@ public class DragonWing extends AxeItem {
         }
     }
 
+    // Teleport to the nearest player within range
     private boolean teleportToClosestPlayer(PlayerEntity user, ServerWorld world) {
         PlayerEntity closestPlayer = world.getClosestPlayer(user.getX(), user.getY(), user.getZ(), maxTpRange, true);
         if (closestPlayer == null) {
@@ -121,6 +124,7 @@ public class DragonWing extends AxeItem {
         return true;
     }
 
+    // Ensures that multiple cannot be crafted
     @Override
     public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player) {
         super.onCraftByPlayer(stack, world, player);

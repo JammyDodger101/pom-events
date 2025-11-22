@@ -5,6 +5,10 @@ import net.minecraft.util.math.BlockPos;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+Handles podiums
+UNUSED
+ */
 public class PodiumsHandler {
     public static List<BlockPos> podiumLocs = new ArrayList<>();
 

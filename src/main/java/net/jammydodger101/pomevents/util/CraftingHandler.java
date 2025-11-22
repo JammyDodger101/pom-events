@@ -1,6 +1,5 @@
 package net.jammydodger101.pomevents.util;
 
-import net.jammydodger101.pomevents.PomEvents;
 import net.jammydodger101.pomevents.item.ModItems;
 import net.jammydodger101.pomevents.particle.ParticleSpawner;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,6 +24,7 @@ public class CraftingHandler {
         put(ModItems.SUMMONER_STAFF, 12392203);
     }};
 
+    // Adds the item to a list of crafted items (locked items)
     public static void craftedItem(ItemStack stack, World world, PlayerEntity player) {
         if (world.isClient()) {
             ParticleSpawner.spawnFireworkParticles(world, player.getPos(), 70);
@@ -35,10 +35,13 @@ public class CraftingHandler {
         world.getPlayers().forEach(playerEntity -> playerEntity.playSoundToPlayer(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.PLAYERS, 1, 1));
     }
 
+    // Tells other players on the server that a specific weapon was crafted
     private static void tellWorldItemWasCrafted(ItemStack stack, World world, PlayerEntity player) {
-        String message = (player.getNameForScoreboard() + " has just crafted the " + stack.getItem().getName().getString() + "!");
-        MutableText text = MutableText.of(Text.of(message).getContent());
-        text.setStyle(Style.EMPTY.withColor(TextColor.fromRgb(legendaryWeaponColours.get(stack.getItem()))).withBold(true));
-        world.getPlayers().forEach(playerEntity -> player.sendMessage(text, false));
+        if (legendaryWeaponColours.containsKey(stack.getItem())) {
+            String message = (player.getNameForScoreboard() + " has just crafted the " + stack.getItem().getName().getString() + "!");
+            MutableText text = MutableText.of(Text.of(message).getContent());
+            text.setStyle(Style.EMPTY.withColor(TextColor.fromRgb(legendaryWeaponColours.get(stack.getItem()))).withBold(true));
+            world.getPlayers().forEach(playerEntity -> player.sendMessage(text, false));
+        }
     }
 }

@@ -9,6 +9,9 @@ import net.minecraft.util.Identifier;
 
 import java.util.function.UnaryOperator;
 
+/*
+Registers custom data components (though currently there aren't any)
+ */
 public class ModDataComponents {
     public static final ComponentType<Integer> MODE =
             register("mode", builder -> builder.codec(Codec.INT));

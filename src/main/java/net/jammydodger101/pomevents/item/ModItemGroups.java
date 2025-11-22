@@ -9,6 +9,9 @@ import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+/*
+Adds all the items to its own tab in the creative inventory
+ */
 public class ModItemGroups {
     public static final ItemGroup FUN_GROUP = Registry.register(Registries.ITEM_GROUP, Identifier.of(PomEvents.MOD_ID, "pom-events"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.pom-events")).icon(() -> new ItemStack(ModItems.CROCKSMARTER_BLADE)).entries(((displayContext, entries) -> {

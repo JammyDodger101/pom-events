@@ -12,10 +12,8 @@ import net.jammydodger101.pomevents.util.ModModelPredicates;
 public class PomEventsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-
         EntityModelLayerRegistry.registerModelLayer(ModEntityModelLayers.SCULK_TRIDENT, SculkTridentProjectileModel::getTexturedModelData);
         EntityRendererRegistry.register(ModEntities.SCULK_TRIDENT, SculkTridentEntityRenderer::new);
         ModModelPredicates.registerModelPredicates();
-
     }
 }
