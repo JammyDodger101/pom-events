@@ -83,6 +83,12 @@ public class SummonerStaff extends Item {
         if (nbtCompound.contains("Moistness")) {
             nbtCompound.putInt("Moistness", 2400);
         }
+        if (nbtCompound.contains("Items")) {
+            nbtCompound.remove("Items");
+        }
+        if (nbtCompound.contains("Inventory")) {
+            nbtCompound.remove("Inventory");
+        }
     }
 
     // Checks if the hit entity is a mob and stores it
