@@ -2,14 +2,15 @@
 	"schemaVersion": 1,
 	"id": "pom-events",
 	"version": "${version}",
-	"name": "pom events",
-	"description": "lengendary waeaposn",
+	"name": "Event mod",
+	"description": "A mod made for Pompomdexter's events",
 	"authors": [
-		"Me!"
+		"Jammydodger101 (coding)",
+		"Citramin (modelling)",
+		"Pompomdexter (ideas)"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://www.youtube.com/@Pompomdexter"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/pom-events/icon.png",
