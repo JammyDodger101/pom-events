@@ -24,6 +24,7 @@ public class ModItemGroups {
                 entries.add(ModItems.GALE_BOW);
                 entries.add(ModItems.SCULK_TRIDENT);
                 entries.add(ModItems.STORM_SPEAR);
+                entries.add(ModItems.CHUNK_SHIFTER);
             })).build());
 
     public static void registerItemGroups() {
