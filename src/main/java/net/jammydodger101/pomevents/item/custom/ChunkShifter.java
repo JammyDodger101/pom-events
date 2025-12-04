@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.*;
 
 public class ChunkShifter extends Item {
+    // Super buggy and doesn't work client-side on servers lol
     public static WorldChunk loadedChunk = null;
 
     public ChunkShifter(Settings settings) {
@@ -43,6 +44,5 @@ public class ChunkShifter extends Item {
         }
         currentChunk.getHeightmap(Heightmap.Type.WORLD_SURFACE).setTo(loadedChunk, Heightmap.Type.WORLD_SURFACE, loadedChunk.getHeightmap(Heightmap.Type.WORLD_SURFACE).asLongArray());
         currentChunk.getChunkSkyLight().refreshSurfaceY(currentChunk);
-        PomEvents.LOGGER.info("test");
     }
 }

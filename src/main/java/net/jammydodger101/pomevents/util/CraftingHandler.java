@@ -29,19 +29,21 @@ public class CraftingHandler {
         if (world.isClient()) {
             ParticleSpawner.spawnFireworkParticles(world, player.getPos(), 70);
             return;
+        } else {
+            craftedItems.add(stack.getItem());
+            tellWorldItemWasCrafted(stack, world, player);
+            world.getPlayers().forEach(playerEntity -> playerEntity.playSoundToPlayer(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.PLAYERS, 1, 1));
         }
-        craftedItems.add(stack.getItem());
-        tellWorldItemWasCrafted(stack, world, player);
-        world.getPlayers().forEach(playerEntity -> playerEntity.playSoundToPlayer(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.PLAYERS, 1, 1));
     }
 
     // Tells other players on the server that a specific weapon was crafted
     private static void tellWorldItemWasCrafted(ItemStack stack, World world, PlayerEntity player) {
+        if (world.isClient()) { return; }
         if (legendaryWeaponColours.containsKey(stack.getItem())) {
             String message = (player.getNameForScoreboard() + " has just crafted the " + stack.getItem().getName().getString() + "!");
             MutableText text = MutableText.of(Text.of(message).getContent());
             text.setStyle(Style.EMPTY.withColor(TextColor.fromRgb(legendaryWeaponColours.get(stack.getItem()))).withBold(true));
-            world.getPlayers().forEach(playerEntity -> player.sendMessage(text, false));
+            world.getPlayers().forEach(playerEntity -> playerEntity.sendMessage(text, false));
         }
     }
 }

@@ -1,10 +1,12 @@
 package net.jammydodger101.pomevents.mixin;
 
+import net.jammydodger101.pomevents.explosion.custom.TestExplosionBehaviour;
 import net.jammydodger101.pomevents.item.ModItems;
 import net.jammydodger101.pomevents.particle.ParticleSpawner;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.sound.SoundCategory;
@@ -57,6 +59,7 @@ public class BlazeShieldMixin {
             lastUseTime = entity.getWorld().getTime();
 
             createFireExplosion(entity.getBlockPos(), world, entity, 3);
+            ((PlayerEntity) entity).getItemCooldownManager().set(ModItems.BLAZE_SHIELD, 300);
 
             if (attacker != null) {
                 attacker.setOnFireFor(100);
@@ -77,7 +80,7 @@ public class BlazeShieldMixin {
     @Unique
     public void createFireExplosion(BlockPos centre, World world, LivingEntity player, int size) {
         if (!world.isClient()) {
-            world.createExplosion(player, null, new AdvancedExplosionBehavior(false, true, Optional.of(1.0f), Optional.empty()), centre.getX(), centre.getY(), centre.getZ(), 2f, false, World.ExplosionSourceType.TNT);
+            world.createExplosion(player, null, new TestExplosionBehaviour(false, true, Optional.of(1.0f), Optional.empty(), 1f), centre.getX(), centre.getY(), centre.getZ(), 2f, false, World.ExplosionSourceType.TNT);
             ParticleSpawner.spawnFireExplosionParticles(world, centre.toBottomCenterPos(), 0.2, 100, 0.8);
         }
         launchEntitiesWithinArea(world, player, size);

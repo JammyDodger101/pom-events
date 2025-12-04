@@ -22,6 +22,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
+import java.util.Collections;
+import java.util.Set;
+
 /*
 A legendary axe that launches hit players and causes the player to teleport when used
  */
@@ -120,7 +123,12 @@ public class DragonWing extends AxeItem {
         if (closestPlayer == null) {
             return false;
         }
-        user.teleport(world, closestPlayer.getX(), closestPlayer.getY(), closestPlayer.getZ()-1, null, user.getYaw(), user.getPitch());
+        user.teleport(world, closestPlayer.getX(), closestPlayer.getY(), closestPlayer.getZ(), Collections.emptySet(), user.getYaw(), user.getPitch());
+
+        world.emitGameEvent(GameEvent.TELEPORT, closestPlayer.getPos(), GameEvent.Emitter.of(user));
+
+        world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT, SoundCategory.PLAYERS, 1f, 1f);
+        user.onLanding();
         return true;
     }
 

@@ -71,6 +71,25 @@ public class LuckBlade extends SwordItem {
             StatusEffects.WATER_BREATHING
     ));
 
+    public List<RegistryEntry<StatusEffect>> godStatusEffectsList = new ArrayList<>(Arrays.asList(
+            StatusEffects.ABSORPTION,
+            StatusEffects.CONDUIT_POWER,
+            StatusEffects.DOLPHINS_GRACE,
+            StatusEffects.FIRE_RESISTANCE,
+            StatusEffects.GLOWING,
+            StatusEffects.HASTE,
+            StatusEffects.HEALTH_BOOST,
+            StatusEffects.HERO_OF_THE_VILLAGE,
+            StatusEffects.INSTANT_HEALTH,
+            StatusEffects.INVISIBILITY,
+            StatusEffects.NIGHT_VISION,
+            StatusEffects.REGENERATION,
+            StatusEffects.RESISTANCE,
+            StatusEffects.SATURATION,
+            StatusEffects.STRENGTH,
+            StatusEffects.WATER_BREATHING
+    ));
+
     private int cooldownTimer = 0;
     private int cooldownMax = -1;
     private RegistryEntry<StatusEffect> currentHeldEffect;
@@ -131,7 +150,7 @@ public class LuckBlade extends SwordItem {
             Random random = new Random();
             StatusEffectInstance effectInstance;
             for (RegistryEntry<StatusEffect> effect :
-                    holdingStatusEffectsList) {
+                    godStatusEffectsList) {
                 int godTime = 15;
                 effectInstance = new StatusEffectInstance(effect, (godTime *20), random.nextInt(1,2));
                 user.addStatusEffect(effectInstance);

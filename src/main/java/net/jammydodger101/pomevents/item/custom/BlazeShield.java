@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 
 /*
 Powerful shield that explodes when hit, launching players back and setting them on fire
+Note: the explosion code can be found in the mixin
  */
 public class BlazeShield extends ShieldItem implements Equipment {
     public BlazeShield(Settings settings) {
@@ -40,7 +41,6 @@ public class BlazeShield extends ShieldItem implements Equipment {
             if (world.isClient()) return TypedActionResult.fail(itemStack);
             user.setCurrentHand(hand);
 
-            user.getItemCooldownManager().set(this, 300);
             return TypedActionResult.consume(itemStack);
         }
         return TypedActionResult.fail(itemStack);
