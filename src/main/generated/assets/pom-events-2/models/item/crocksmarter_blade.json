@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "pom-events-2:item/crocksmarter_blade"
+  }
+}

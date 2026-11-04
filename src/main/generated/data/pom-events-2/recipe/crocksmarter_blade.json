@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": "minecraft:enchanted_golden_apple",
+    "N": "minecraft:netherite_ingot",
+    "O": "minecraft:crying_obsidian"
+  },
+  "pattern": [
+    "NON",
+    "OEO",
+    "NON"
+  ],
+  "result": {
+    "id": "pom-events-2:crocksmarter_blade"
+  }
+}

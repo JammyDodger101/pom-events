@@ -1,0 +1,38 @@
+package net.jammydodger101.command;
+
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.jammydodger101.util.CraftingHandler;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
+
+public class UnlockCraftingItemCommand {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+        dispatcher.register(Commands.literal("unlock")
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
+                .executes((commandContext -> {return run(commandContext.getSource());})));
+    }
+
+    private static int run(CommandSourceStack context) throws CommandSyntaxException {
+        ServerPlayer player = context.getPlayer();
+        if (player != null) {
+            return unlockHeldItemFromCrafting(player, context);
+        }
+        return 0;
+    }
+
+    private static int unlockHeldItemFromCrafting(ServerPlayer player, CommandSourceStack context) {
+        ItemStack item = player.getItemInHand(InteractionHand.MAIN_HAND);
+        if (item != null) {
+            CraftingHandler.lockedItems.remove(item.getItem());
+            context.sendSuccess(() -> {return Component.literal((item.getItemName().getString()) + " is unlocked from crafting.");}, true);
+            return 1;
+        }
+        player.sendSystemMessage(Component.literal("An error occurred (are you holding an item?)"));
+        return 0;
+    }
+}
