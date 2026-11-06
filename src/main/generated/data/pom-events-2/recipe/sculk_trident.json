@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "H": "pom-events-2:warden_heart",
+    "R": "minecraft:trident",
+    "S": "minecraft:sculk",
+    "T": "minecraft:tnt"
+  },
+  "pattern": [
+    "STS",
+    "SHS",
+    "SRS"
+  ],
+  "result": {
+    "id": "pom-events-2:sculk_trident"
+  }
+}

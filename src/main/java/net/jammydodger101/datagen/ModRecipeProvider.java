@@ -24,15 +24,17 @@ public class ModRecipeProvider extends FabricRecipeProvider {
         return new RecipeProvider(bootstrapContext, bootstrapContext1) {
             @Override
             public void buildRecipes() {
-                shaped(RecipeCategory.MISC, ModItems.CROCKSMARTER_BLADE)
-                        .pattern("NON")
-                        .pattern("OEO")
-                        .pattern("NON")
-                        .define('O', Items.CRYING_OBSIDIAN)
-                        .define('N', Items.NETHERITE_INGOT)
-                        .define('E', Items.ENCHANTED_GOLDEN_APPLE)
-                        .unlockedBy(getHasName(Items.ENCHANTED_GOLDEN_APPLE), has(Items.ENCHANTED_GOLDEN_APPLE))
+                shaped(RecipeCategory.MISC, ModItems.SCULK_TRIDENT)
+                        .pattern("STS")
+                        .pattern("SHS")
+                        .pattern("SRS")
+                        .define('S', Items.SCULK)
+                        .define('T', Items.TNT)
+                        .define('R', Items.TRIDENT)
+                        .define('H', ModItems.WARDEN_HEART)
+                        .unlockedBy(getHasName(ModItems.WARDEN_HEART), has(ModItems.WARDEN_HEART))
                         .save(output);
+
             }
         };
     }

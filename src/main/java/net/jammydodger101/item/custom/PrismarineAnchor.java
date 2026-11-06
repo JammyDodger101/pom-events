@@ -2,6 +2,7 @@ package net.jammydodger101.item.custom;
 
 import net.jammydodger101.entity.custom.ThrownPrismarineAnchor;
 import net.jammydodger101.particle.ParticleSpawner;
+import net.jammydodger101.util.CraftingHandler;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -277,6 +278,12 @@ public class PrismarineAnchor extends Item {
                 player.getCooldowns().addCooldown(itemStack, 30);
             }
         }
+    }
+
+    @Override
+    public void onCraftedBy(ItemStack itemStack, Player player) {
+        super.onCraftedBy(itemStack, player);
+        CraftingHandler.craftedItem(itemStack, player.level(), player);
     }
 
 }

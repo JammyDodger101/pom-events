@@ -50,7 +50,7 @@ public class ParticleSpawner {
 
     // Spawns the same particles as when a firework explodes
     public static void spawnFireworkParticles(Level world, Vec3 pos, int numParticles) {
-        if (!(world.isClientSide())) return;
+        if ((world.isClientSide())) return;
         Random random = new Random();
         double d = random.nextGaussian() * 0.05;
         double e = random.nextGaussian() * 0.05;
@@ -60,10 +60,8 @@ public class ParticleSpawner {
             double f = random.nextGaussian() * 0.15 + d;
             double g = random.nextGaussian() * 0.15 + e;
             double h = random.nextDouble() * 0.5;
-            for (Player player : world.players()) {
-                //player.level().addParticle(new DustParticleOptions(random.nextInt(), 1.0F), pos.x, pos.y, pos.z, f, h, g);
-                serverLevel.sendParticles(ParticleTypes.FIREWORK, pos.x, pos.y, pos.z, 1, f, h, g, 1);
-            }
+            serverLevel.sendParticles(ParticleTypes.FIREWORK, pos.x, pos.y, pos.z, 3, f, h, g, 0.5);
+
         }
     }
 }

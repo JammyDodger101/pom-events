@@ -18,6 +18,7 @@ public class ModCreativeTab {
                         output.accept(ModItems.SCULK_TRIDENT);
                         output.accept(ModItems.DRAGON_WING);
                         output.accept(ModItems.PRISMARINE_ANCHOR);
+                        output.accept(ModItems.SUMMONER_STAFF);
                     })).title(Component.literal("Event Tab")).build());
 
     public static void registerCreativeTab() {

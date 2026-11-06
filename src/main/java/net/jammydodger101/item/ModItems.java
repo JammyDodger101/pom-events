@@ -4,6 +4,7 @@ import net.jammydodger101.PomEvents2;
 import net.jammydodger101.item.custom.DragonWing;
 import net.jammydodger101.item.custom.PrismarineAnchor;
 import net.jammydodger101.item.custom.SculkTrident;
+import net.jammydodger101.item.custom.SummonerStaff;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -37,6 +38,8 @@ public class ModItems {
             properties -> new PrismarineAnchor(properties.stacksTo(1).attributes(ItemAttributeModifiers.builder()
                     .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, (double)(9), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(Attributes.ATTACK_SPEED, new AttributeModifier(Item.BASE_ATTACK_SPEED_ID, (double)-3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build()).rarity(Rarity.EPIC)));
+    public static final Item SUMMONER_STAFF = registerItem("summoner_staff",
+            properties -> new SummonerStaff(properties.stacksTo(1)));
 
     public static ResourceKey<Item> getRK(Item item) {
         return BuiltInRegistries.ITEM.getResourceKey(item).get();

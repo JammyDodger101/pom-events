@@ -3,6 +3,7 @@
   "package": "net.jammydodger101.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
+    "CancelCraftingMixin"
   ],
   "injectors": {
     "defaultRequire": 1

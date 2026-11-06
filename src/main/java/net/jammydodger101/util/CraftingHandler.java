@@ -1,8 +1,10 @@
 package net.jammydodger101.util;
 
+import net.jammydodger101.item.ModItems;
 import net.jammydodger101.particle.ParticleSpawner;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -27,20 +29,24 @@ public class CraftingHandler {
         put(ModItems.STORM_SPEAR, 650680);
         put(ModItems.SUMMONER_STAFF, 12392203);
         */
-        put(Items.DIAMOND_AXE, 1466496);
+        put(ModItems.SCULK_TRIDENT, 1466496);
+        put(ModItems.DRAGON_WING, 8667632);
+        put(ModItems.SUMMONER_STAFF, 12392203);
+        put(ModItems.PRISMARINE_ANCHOR, 650680);
     }};
 
 
 
     public static void craftedItem(ItemStack stack, Level world, Player player) {
         if (world.isClientSide()) {
-            ParticleSpawner.spawnFireworkParticles(world, player.getClientPosition(), 70);
+
             return;
         }
-
+        ParticleSpawner.spawnFireworkParticles(world, player.getClientPosition(), 200);
         lockedItems.add(stack.getItem());
         tellWorldItemWasCrafted(stack, world, player);
-        world.players().forEach(playerEntity -> playerEntity.playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE));
+        //world.players().forEach(playerEntity -> playerEntity.playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE));
+        world.playSound(null, player.blockPosition(), SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.PLAYERS);
     }
 
     private static void tellWorldItemWasCrafted(ItemStack stack, Level world, Player player) {
@@ -48,8 +54,12 @@ public class CraftingHandler {
             return;
         }
         if (legendaryWeaponColours.containsKey(stack.getItem())) {
-            String message = (player.getScoreboardName() + "has just crafted the " + stack.getItemName().getString() + "!");
-            world.players().forEach(playerEntity -> playerEntity.sendSystemMessage(Component.literal(message).withColor(legendaryWeaponColours.get(stack.getItem()))));
+            String message = (player.getScoreboardName() + " has just crafted the " + stack.getItemName().getString() + "!");
+            world.players().forEach(playerEntity -> {
+                playerEntity.sendSystemMessage(Component.literal(message).withColor(legendaryWeaponColours.get(stack.getItem())));
+
+            });
+
         }
     }
 }
