@@ -2,14 +2,14 @@
 	"schemaVersion": 1,
 	"id": "pom-events-2",
 	"version": "${version}",
-	"name": "pom-events-2",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "ppd-legendary-weapons",
+	"description": "Legendary weapons for pompomdoodoo!",
 	"authors": [
-		"Me!"
+		"JammyDodger101"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://www.youtube.com/@jammydodger1001/videos",
+		"sources": "https://www.youtube.com/@jammydodger1001/videos"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/pom-events-2/icon.png",
@@ -29,7 +29,7 @@
 		"pom-events-2.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.20.1",
+		"fabricloader": "*",
 		"minecraft": "~26.3",
 		"java": ">=25",
 		"fabric-api": "*"

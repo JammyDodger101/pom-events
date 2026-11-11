@@ -15,6 +15,6 @@ public class ModItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider registries) {
-        tag(ItemTags.AXES).add(ModItems.getRK(ModItems.DRAGON_WING));
+        //tag(ItemTags.AXES).add(ModItems.getRK(ModItems.DRAGON_WING));
     }
 }
