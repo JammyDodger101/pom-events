@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -43,19 +44,22 @@ public class PrismarineAnchorRenderer extends EntityRenderer<ThrownPrismarineAnc
         poseStack.rotateDegrees(Axis.ZP, state.xRot + 90.0F);
         submitNodeCollector.submitModel(this.model, state, poseStack, RenderTypes.entitySolid(getTextureLocation()), state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
 
+        /*
         float xa = (float)state.lineOriginOffset.x;
         float ya = (float)state.lineOriginOffset.y;
         float za = (float)state.lineOriginOffset.z;
         float width = Minecraft.getInstance().gameRenderer.gameRenderState().windowRenderState.appropriateLineWidth;
         submitNodeCollector.submitCustomGeometry(poseStack, RenderTypes.lines(), (pose, buffer) -> {
-            for(int i = 0; i < 16; ++i) {
-                float a0 = (float) i /16f;
-                float a1 = ((float)i + 1)/ 16f;
+            for(int i = 0; i < 1; ++i) {
+                float a0 = (float) i /1f;
+                float a1 = ((float)i + 1)/ 1f;
                 stringVertex(xa, ya, za, buffer, pose, a0, a1, width);
                 stringVertex(xa, ya, za, buffer, pose, a1, a0, width);
             }
 
         });
+
+         */
 
         poseStack.popPose();
         super.submit(state, poseStack, submitNodeCollector, camera);
@@ -92,11 +96,11 @@ public class PrismarineAnchorRenderer extends EntityRenderer<ThrownPrismarineAnc
             float swing2 = Mth.sin((double)(Mth.sqrt(swing) * 3.1415927F));
             Vec3 playerPos = owner.position();
             Vec3 hookPos = entity.getPosition(partialTicks).add(0.0, 0.25, 0.0);
-            state.lineOriginOffset = playerPos.subtract(hookPos);
+            state.lineOriginOffset = hookPos.subtract(playerPos);
         }
     }
 
     public Identifier getTextureLocation() {
-        return Identifier.fromNamespaceAndPath(PomEvents2.MOD_ID, "textures/entity/sculk_trident/base.png");
+        return Identifier.fromNamespaceAndPath(PomEvents2.MOD_ID, "textures/entity/sculk_trident/sculk_trident.png");
     }
 }
