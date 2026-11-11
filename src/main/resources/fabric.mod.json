@@ -16,13 +16,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"net.jammydodger101.PomEvents2"
+			"net.jammydodger101pom.PomEvents2"
 		],
 		"fabric-datagen": [
-			"net.jammydodger101.PomEvents2DataGenerator"
+			"net.jammydodger101pom.PomEvents2DataGenerator"
 		],
 		"client": [
-			"net.jammydodger101.PomEvents2Client"
+			"net.jammydodger101pom.PomEvents2Client"
 		]
 	},
 	"mixins": [

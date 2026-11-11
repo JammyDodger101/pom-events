@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "net.jammydodger101.mixin",
+  "package": "net.jammydodger101pom.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
     "CancelCraftingMixin"
